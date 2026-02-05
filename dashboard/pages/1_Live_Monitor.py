@@ -36,8 +36,26 @@ except:
     api_available = False
 
 if not api_available:
-    st.error("⚠️ API sunucusu çalışmıyor! Lütfen önce API'yi başlatın:")
-    st.code("cd /tmp/workspace && python api/main.py")
+    st.warning("⚠️ API sunucusu çalışmıyor. Sadece ana dashboard'u kullanın.")
+    st.info("💡 Ana sayfaya dönün: Soldaki menüden 'streamlit app' seçin")
+    st.markdown("---")
+    st.markdown("""
+    ### 🔧 API Olmadan Kullanım
+    
+    Streamlit Cloud'da API backend ayrı deploy edilmelidir.
+    
+    **Ana Dashboard Özellikleri:**
+    - ✅ Şirket başlatma
+    - ✅ Çalışan listesi
+    - ✅ Görev yönetimi
+    - ✅ Hedef takibi
+    - ✅ İstatistikler
+    
+    **Lokal Kullanım için:**
+    ```bash
+    ./start_web.sh
+    ```
+    """)
     st.stop()
 
 # Auto-refresh seçeneği

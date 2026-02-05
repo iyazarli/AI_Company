@@ -4,8 +4,8 @@ AI-Powered Agents - LLM entegrasyonlu ajanlar
 from typing import List, Dict, Optional
 from agents.base_agent import BaseAgent, Task
 from langchain_openai import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate
-from langchain.schema import HumanMessage, SystemMessage
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.messages import HumanMessage, SystemMessage
 import os
 from systems.ai_provider import AIProviderManager
 

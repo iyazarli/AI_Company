@@ -84,6 +84,29 @@ if 'api_keys_configured' not in st.session_state:
 
 def check_api_keys():
     """API key'lerin varlığını kontrol et"""
+    # Önce Streamlit secrets'ı kontrol et (Cloud deployment için)
+    if hasattr(st, 'secrets'):
+        keys = []
+        try:
+            if 'OPENAI_API_KEY' in st.secrets:
+                keys.append('OpenAI')
+        except:
+            pass
+        try:
+            if 'ANTHROPIC_API_KEY' in st.secrets:
+                keys.append('Anthropic')
+        except:
+            pass
+        try:
+            if 'GOOGLE_API_KEY' in st.secrets:
+                keys.append('Google')
+        except:
+            pass
+        
+        if keys:
+            return True, keys
+    
+    # .env dosyasını kontrol et (local deployment için)
     env_file = ROOT_DIR / '.env'
     if not env_file.exists():
         return False, []
@@ -104,6 +127,24 @@ def check_api_keys():
 def initialize_company():
     """Şirketi başlat"""
     try:
+        # Streamlit secrets'tan API keylerini environment'a yükle
+        if hasattr(st, 'secrets'):
+            try:
+                if 'OPENAI_API_KEY' in st.secrets:
+                    os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+            except:
+                pass
+            try:
+                if 'ANTHROPIC_API_KEY' in st.secrets:
+                    os.environ['ANTHROPIC_API_KEY'] = st.secrets['ANTHROPIC_API_KEY']
+            except:
+                pass
+            try:
+                if 'GOOGLE_API_KEY' in st.secrets:
+                    os.environ['GOOGLE_API_KEY'] = st.secrets['GOOGLE_API_KEY']
+            except:
+                pass
+        
         # Auto-config ile AI sağlayıcılarını ayarla
         auto_config = AutoAIConfigurator()
         config = auto_config.generate_config()

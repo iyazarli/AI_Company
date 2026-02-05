@@ -29,7 +29,25 @@ except:
     api_ok = False
 
 if not api_ok:
-    st.error("⚠️ API sunucusu çalışmıyor!")
+    st.warning("⚠️ API sunucusu çalışmıyor. Sadece ana dashboard'u kullanın.")
+    st.info("💡 Ana sayfaya dönün: Soldaki menüden 'streamlit app' seçin")
+    st.markdown("---")
+    st.markdown("""
+    ### 🔧 API Olmadan Kullanım
+    
+    Kontrol paneli API backend gerektirir.
+    
+    **Ana Dashboard'da Yapabilirsiniz:**
+    - ✅ Şirket başlatma/durdurma
+    - ✅ Toplantı yapma
+    - ✅ İş günü simülasyonu
+    - ✅ İstatistik görüntüleme
+    
+    **Lokal Kullanım için:**
+    ```bash
+    ./start_web.sh
+    ```
+    """)
     st.stop()
 
 # Tab'lar
