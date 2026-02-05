@@ -160,8 +160,7 @@ async def start_company(background_tasks: BackgroundTasks):
         
         # Şirketi oluştur
         company = AutonomousCompany(
-            config_path=ROOT_DIR / 'config' / 'company_config.yaml',
-            ai_provider_manager=ai_manager
+            config_path=ROOT_DIR / 'config' / 'company_config.yaml'
         )
         
         # Initialize
