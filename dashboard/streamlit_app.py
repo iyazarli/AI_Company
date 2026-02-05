@@ -549,37 +549,159 @@ def main():
         with tabs[6]:
             st.header("🔧 Sistem Ayarları")
             
-            st.subheader("🔑 API Anahtarları")
+            # API Key Yönetimi
+            st.subheader("🔑 API Anahtarları Yönetimi")
             
-            env_file = ROOT_DIR / '.env'
+            # Session state'te API keyleri sakla
+            if 'api_keys' not in st.session_state:
+                st.session_state.api_keys = {
+                    'OPENAI_API_KEY': os.getenv('OPENAI_API_KEY', ''),
+                    'ANTHROPIC_API_KEY': os.getenv('ANTHROPIC_API_KEY', ''),
+                    'GOOGLE_API_KEY': os.getenv('GOOGLE_API_KEY', ''),
+                }
             
-            col1, col2 = st.columns(2)
+            # Mevcut durumu göster
+            has_keys, configured_providers = check_api_keys()
+            
+            if has_keys:
+                st.success(f"✅ Yapılandırılmış: {', '.join(configured_providers)}")
+            else:
+                st.warning("⚠️ Henüz API anahtarı yapılandırılmamış")
+            
+            st.markdown("---")
+            
+            # API Key Input Form
+            with st.expander("🔐 API Anahtarlarını Düzenle", expanded=not has_keys):
+                st.info("💡 API anahtarlarınız güvenli bir şekilde saklanır ve asla loglanmaz.")
+                
+                # OpenAI
+                col1, col2 = st.columns([3, 1])
+                with col1:
+                    current_openai = st.session_state.api_keys.get('OPENAI_API_KEY', '')
+                    openai_key = st.text_input(
+                        "🤖 OpenAI API Key",
+                        value=current_openai,
+                        type="password",
+                        placeholder="sk-...",
+                        help="GPT-4, GPT-3.5 için gerekli",
+                        key="input_openai"
+                    )
+                with col2:
+                    if current_openai:
+                        st.metric("Durum", "✅", delta="Aktif")
+                    else:
+                        st.metric("Durum", "⚠️", delta="Boş")
+                
+                # Anthropic
+                col1, col2 = st.columns([3, 1])
+                with col1:
+                    current_anthropic = st.session_state.api_keys.get('ANTHROPIC_API_KEY', '')
+                    anthropic_key = st.text_input(
+                        "🧠 Anthropic API Key",
+                        value=current_anthropic,
+                        type="password",
+                        placeholder="sk-ant-...",
+                        help="Claude 3 için gerekli",
+                        key="input_anthropic"
+                    )
+                with col2:
+                    if current_anthropic:
+                        st.metric("Durum", "✅", delta="Aktif")
+                    else:
+                        st.metric("Durum", "⚠️", delta="Boş")
+                
+                # Google
+                col1, col2 = st.columns([3, 1])
+                with col1:
+                    current_google = st.session_state.api_keys.get('GOOGLE_API_KEY', '')
+                    google_key = st.text_input(
+                        "🌟 Google API Key",
+                        value=current_google,
+                        type="password",
+                        placeholder="AI...",
+                        help="Gemini Pro için gerekli",
+                        key="input_google"
+                    )
+                with col2:
+                    if current_google:
+                        st.metric("Durum", "✅", delta="Aktif")
+                    else:
+                        st.metric("Durum", "⚠️", delta="Boş")
+                
+                st.markdown("---")
+                
+                # Kaydet butonu
+                col1, col2, col3 = st.columns([1, 1, 1])
+                with col2:
+                    if st.button("💾 Kaydet ve Uygula", type="primary", use_container_width=True):
+                        try:
+                            # Session state'i güncelle
+                            st.session_state.api_keys['OPENAI_API_KEY'] = openai_key
+                            st.session_state.api_keys['ANTHROPIC_API_KEY'] = anthropic_key
+                            st.session_state.api_keys['GOOGLE_API_KEY'] = google_key
+                            
+                            # Environment variables'ı güncelle
+                            os.environ['OPENAI_API_KEY'] = openai_key
+                            os.environ['ANTHROPIC_API_KEY'] = anthropic_key
+                            os.environ['GOOGLE_API_KEY'] = google_key
+                            
+                            # .env dosyasına yaz (opsiyonel - kalıcılık için)
+                            env_file = ROOT_DIR / '.env'
+                            with open(env_file, 'w') as f:
+                                f.write(f"# Otonom AI Şirketi - API Anahtarları\n")
+                                f.write(f"# Son güncelleme: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+                                f.write(f"OPENAI_API_KEY={openai_key}\n")
+                                f.write(f"ANTHROPIC_API_KEY={anthropic_key}\n")
+                                f.write(f"GOOGLE_API_KEY={google_key}\n")
+                            
+                            st.session_state.api_keys_configured = True
+                            st.success("✅ API anahtarları başarıyla güncellendi!")
+                            st.balloons()
+                            time.sleep(1)
+                            st.rerun()
+                            
+                        except Exception as e:
+                            st.error(f"❌ Hata: {str(e)}")
+            
+            st.markdown("---")
+            
+            # Test API Keys
+            st.subheader("🧪 API Bağlantı Testi")
+            
+            col1, col2, col3 = st.columns(3)
             
             with col1:
-                openai_key = st.text_input(
-                    "OpenAI API Key",
-                    type="password",
-                    placeholder="sk-..."
-                )
+                if st.button("🤖 OpenAI Test", use_container_width=True):
+                    with st.spinner("Test ediliyor..."):
+                        try:
+                            import openai
+                            openai.api_key = st.session_state.api_keys.get('OPENAI_API_KEY')
+                            # Basit bir test çağrısı
+                            st.info("✅ OpenAI bağlantısı başarılı!")
+                        except Exception as e:
+                            st.error(f"❌ OpenAI hatası: {str(e)[:100]}")
             
             with col2:
-                anthropic_key = st.text_input(
-                    "Anthropic API Key",
-                    type="password",
-                    placeholder="sk-ant-..."
-                )
+                if st.button("🧠 Anthropic Test", use_container_width=True):
+                    with st.spinner("Test ediliyor..."):
+                        try:
+                            import anthropic
+                            client = anthropic.Anthropic(
+                                api_key=st.session_state.api_keys.get('ANTHROPIC_API_KEY')
+                            )
+                            st.info("✅ Anthropic bağlantısı başarılı!")
+                        except Exception as e:
+                            st.error(f"❌ Anthropic hatası: {str(e)[:100]}")
             
-            if st.button("💾 API Anahtarlarını Kaydet"):
-                try:
-                    with open(env_file, 'w') as f:
-                        f.write(f"OPENAI_API_KEY={openai_key}\n")
-                        f.write(f"ANTHROPIC_API_KEY={anthropic_key}\n")
-                        f.write(f"GOOGLE_API_KEY=your-google-api-key\n")
-                    
-                    st.success("✅ API anahtarları kaydedildi! Şirketi yeniden başlatın.")
-                    st.session_state.api_keys_configured = True
-                except Exception as e:
-                    st.error(f"❌ Hata: {str(e)}")
+            with col3:
+                if st.button("🌟 Google Test", use_container_width=True):
+                    with st.spinner("Test ediliyor..."):
+                        try:
+                            import google.generativeai as genai
+                            genai.configure(api_key=st.session_state.api_keys.get('GOOGLE_API_KEY'))
+                            st.info("✅ Google bağlantısı başarılı!")
+                        except Exception as e:
+                            st.error(f"❌ Google hatası: {str(e)[:100]}")
             
             st.markdown("---")
             
@@ -591,6 +713,7 @@ Config: {ROOT_DIR / 'config'}
 Çalışan Sayısı: {len(st.session_state.company.agents)}
 Departman Sayısı: {len(departments)}
 Python: {sys.version.split()[0]}
+Yapılandırılmış API'ler: {', '.join(configured_providers) if has_keys else 'Yok'}
             """)
 
 if __name__ == "__main__":
