@@ -63,7 +63,7 @@ class RoleAIAssignment:
 
 class AIProviderManager:
     """AI sağlayıcı yöneticisi"""
-    def __init__(self, config_path: str = None    def __init__(self, config_path: str = None    def __init__(self, config_path: str = None, auto_mode: bool = True):
+    def __init__(self, config_path: str = None, auto_mode: bool = True):
         self.auto_mode = auto_mode
         
         # Otomatik mod - API key'lere göre konfigüre et
@@ -175,8 +175,6 @@ class AIProviderManager:
                 fallback_ai=model_config['fallback'],
                 tier=AITier(model_config['tier']),
                 difficulty_level=difficulty,
-                reasoning=reason,
-                difficulty_level=difficulty,
                 reasoning="Auto-configured default"
             )
         
@@ -187,8 +185,8 @@ class AIProviderManager:
             tier=AITier.PRO,
             difficulty_level=5,
                 reasoning="Fallback model"
-                    difficulty_level=config['difficulty_level'],
-                    reasoning=config['reasoning']
+                difficulty_level=config['difficulty_level'],
+                reasoning=config['reasoning']
                 )
         
         # Varsayılan AI (eğer bulunamazsa)
