@@ -1,0 +1,394 @@
+# AI Providers Research & Configuration
+# Piyasadaki tüm yapay zeka araçları ve yetenekleri
+
+ai_providers:
+  # OpenAI - GPT Serisi
+  openai:
+    models:
+      gpt-4-turbo:
+        tier: "enterprise"
+        cost: "high"
+        strengths: ["coding", "reasoning", "complex-tasks", "analysis"]
+        best_for: ["senior-developers", "architects", "executives", "researchers"]
+        context_window: 128000
+        
+      gpt-4:
+        tier: "pro"
+        cost: "medium-high"
+        strengths: ["coding", "reasoning", "writing", "analysis"]
+        best_for: ["developers", "managers", "analysts"]
+        context_window: 8192
+        
+      gpt-3.5-turbo:
+        tier: "free/basic"
+        cost: "low"
+        strengths: ["general-tasks", "simple-coding", "writing"]
+        best_for: ["junior-roles", "support", "content-creation"]
+        context_window: 16385
+
+  # Anthropic - Claude Serisi
+  anthropic:
+    models:
+      claude-3-opus:
+        tier: "enterprise"
+        cost: "high"
+        strengths: ["complex-reasoning", "analysis", "creative-writing", "research"]
+        best_for: ["research-scientists", "writers", "strategic-planners", "executives"]
+        context_window: 200000
+        
+      claude-3-sonnet:
+        tier: "pro"
+        cost: "medium"
+        strengths: ["balanced-performance", "coding", "analysis"]
+        best_for: ["developers", "analysts", "managers"]
+        context_window: 200000
+        
+      claude-3-haiku:
+        tier: "basic"
+        cost: "low"
+        strengths: ["fast-responses", "simple-tasks"]
+        best_for: ["support-agents", "quick-tasks"]
+        context_window: 200000
+
+  # Google - Gemini Serisi
+  google:
+    models:
+      gemini-ultra:
+        tier: "enterprise"
+        cost: "high"
+        strengths: ["multimodal", "research", "complex-reasoning"]
+        best_for: ["researchers", "data-scientists", "vision-engineers"]
+        context_window: 32000
+        
+      gemini-pro:
+        tier: "pro"
+        cost: "medium"
+        strengths: ["general-purpose", "coding", "multimodal"]
+        best_for: ["developers", "designers", "analysts"]
+        context_window: 32000
+        
+      gemini-flash:
+        tier: "basic"
+        cost: "low"
+        strengths: ["fast", "efficient", "simple-tasks"]
+        best_for: ["support", "content-creation"]
+        context_window: 32000
+
+  # Meta - LLaMA
+  meta:
+    models:
+      llama-3-70b:
+        tier: "pro"
+        cost: "medium"
+        strengths: ["open-source", "coding", "reasoning"]
+        best_for: ["developers", "researchers"]
+        context_window: 8192
+        
+      llama-3-8b:
+        tier: "free"
+        cost: "very-low"
+        strengths: ["open-source", "general-tasks"]
+        best_for: ["basic-tasks", "prototyping"]
+        context_window: 8192
+
+  # Mistral AI
+  mistral:
+    models:
+      mistral-large:
+        tier: "enterprise"
+        cost: "high"
+        strengths: ["multilingual", "coding", "reasoning"]
+        best_for: ["developers", "international-teams"]
+        context_window: 32000
+        
+      mistral-medium:
+        tier: "pro"
+        cost: "medium"
+        strengths: ["balanced", "coding"]
+        best_for: ["developers", "analysts"]
+        context_window: 32000
+        
+      mistral-small:
+        tier: "basic"
+        cost: "low"
+        strengths: ["fast", "efficient"]
+        best_for: ["simple-tasks"]
+        context_window: 32000
+
+  # Cohere
+  cohere:
+    models:
+      command-r-plus:
+        tier: "pro"
+        cost: "medium"
+        strengths: ["retrieval", "search", "qa"]
+        best_for: ["search-systems", "knowledge-management"]
+        context_window: 128000
+
+  # Perplexity
+  perplexity:
+    models:
+      pplx-70b-online:
+        tier: "pro"
+        cost: "medium"
+        strengths: ["web-search", "real-time-data", "research"]
+        best_for: ["researchers", "market-analysts", "business-dev"]
+        context_window: 4096
+
+# Role-based AI Assignment Strategy
+role_assignments:
+  # TECHNOLOGY DEPARTMENT
+  technology:
+    # Senior Roles - Enterprise Tier
+    lead_developer:
+      primary_ai: "openai/gpt-4-turbo"
+      fallback_ai: "anthropic/claude-3-opus"
+      tier: "enterprise"
+      difficulty_level: 9
+      reasoning: "Complex architecture decisions, code review, team leadership"
+      
+    ai_research_scientist:
+      primary_ai: "anthropic/claude-3-opus"
+      fallback_ai: "google/gemini-ultra"
+      tier: "enterprise"
+      difficulty_level: 10
+      reasoning: "Advanced research, complex reasoning, paper writing"
+      
+    # Mid-level Roles - Pro Tier
+    backend_developer:
+      primary_ai: "openai/gpt-4"
+      fallback_ai: "anthropic/claude-3-sonnet"
+      tier: "pro"
+      difficulty_level: 7
+      reasoning: "Complex coding, API design, database optimization"
+      
+    frontend_developer:
+      primary_ai: "openai/gpt-4"
+      fallback_ai: "google/gemini-pro"
+      tier: "pro"
+      difficulty_level: 6
+      reasoning: "UI/UX implementation, React/Vue expertise"
+      
+    ios_developer:
+      primary_ai: "openai/gpt-4"
+      fallback_ai: "mistral/mistral-large"
+      tier: "pro"
+      difficulty_level: 7
+      reasoning: "Swift/SwiftUI expertise, iOS SDK knowledge"
+      
+    android_developer:
+      primary_ai: "openai/gpt-4"
+      fallback_ai: "google/gemini-pro"
+      tier: "pro"
+      difficulty_level: 7
+      reasoning: "Kotlin expertise, Android SDK, Google ecosystem"
+      
+    game_developer:
+      primary_ai: "openai/gpt-4-turbo"
+      fallback_ai: "anthropic/claude-3-sonnet"
+      tier: "enterprise"
+      difficulty_level: 8
+      reasoning: "Unity/Unreal expertise, complex game mechanics"
+      
+    ai_ml_engineer:
+      primary_ai: "anthropic/claude-3-opus"
+      fallback_ai: "openai/gpt-4-turbo"
+      tier: "enterprise"
+      difficulty_level: 9
+      reasoning: "ML model development, advanced algorithms"
+      
+    data_scientist:
+      primary_ai: "anthropic/claude-3-sonnet"
+      fallback_ai: "google/gemini-pro"
+      tier: "pro"
+      difficulty_level: 7
+      reasoning: "Data analysis, statistics, visualization"
+      
+    # Junior/Support Roles - Basic Tier
+    qa_engineer:
+      primary_ai: "openai/gpt-3.5-turbo"
+      fallback_ai: "anthropic/claude-3-haiku"
+      tier: "basic"
+      difficulty_level: 4
+      reasoning: "Testing, bug reporting, basic automation"
+      
+    technical_writer:
+      primary_ai: "anthropic/claude-3-sonnet"
+      fallback_ai: "openai/gpt-4"
+      tier: "pro"
+      difficulty_level: 5
+      reasoning: "Documentation, clear writing, technical accuracy"
+      
+    ui_ux_designer:
+      primary_ai: "google/gemini-pro"
+      fallback_ai: "anthropic/claude-3-sonnet"
+      tier: "pro"
+      difficulty_level: 6
+      reasoning: "Multimodal capabilities, design thinking"
+
+  # MARKETING DEPARTMENT
+  marketing:
+    marketing_manager:
+      primary_ai: "anthropic/claude-3-opus"
+      fallback_ai: "openai/gpt-4-turbo"
+      tier: "enterprise"
+      difficulty_level: 8
+      reasoning: "Strategy, campaign planning, creative direction"
+      
+    content_creator:
+      primary_ai: "anthropic/claude-3-sonnet"
+      fallback_ai: "openai/gpt-4"
+      tier: "pro"
+      difficulty_level: 5
+      reasoning: "Creative writing, storytelling, content quality"
+      
+    social_media_manager:
+      primary_ai: "openai/gpt-4"
+      fallback_ai: "anthropic/claude-3-haiku"
+      tier: "pro"
+      difficulty_level: 5
+      reasoning: "Quick responses, trend awareness, engagement"
+      
+    seo_specialist:
+      primary_ai: "perplexity/pplx-70b-online"
+      fallback_ai: "openai/gpt-4"
+      tier: "pro"
+      difficulty_level: 6
+      reasoning: "Web research, SEO trends, data analysis"
+      
+    graphic_designer:
+      primary_ai: "google/gemini-pro"
+      fallback_ai: "anthropic/claude-3-sonnet"
+      tier: "pro"
+      difficulty_level: 6
+      reasoning: "Visual understanding, design critique"
+
+  # BUSINESS DEVELOPMENT
+  business_development:
+    bd_manager:
+      primary_ai: "anthropic/claude-3-opus"
+      fallback_ai: "openai/gpt-4-turbo"
+      tier: "enterprise"
+      difficulty_level: 8
+      reasoning: "Strategic thinking, negotiation, analysis"
+      
+    market_research_analyst:
+      primary_ai: "perplexity/pplx-70b-online"
+      fallback_ai: "anthropic/claude-3-sonnet"
+      tier: "pro"
+      difficulty_level: 7
+      reasoning: "Real-time data, market research, trends"
+      
+    sales_representative:
+      primary_ai: "openai/gpt-4"
+      fallback_ai: "anthropic/claude-3-sonnet"
+      tier: "pro"
+      difficulty_level: 6
+      reasoning: "Communication, persuasion, customer understanding"
+
+  # FINANCE & ACCOUNTING
+  finance:
+    cfo:
+      primary_ai: "anthropic/claude-3-opus"
+      fallback_ai: "openai/gpt-4-turbo"
+      tier: "enterprise"
+      difficulty_level: 9
+      reasoning: "Financial strategy, complex analysis, forecasting"
+      
+    accountant:
+      primary_ai: "openai/gpt-4"
+      fallback_ai: "anthropic/claude-3-sonnet"
+      tier: "pro"
+      difficulty_level: 6
+      reasoning: "Accounting rules, calculations, compliance"
+      
+    budget_analyst:
+      primary_ai: "anthropic/claude-3-sonnet"
+      fallback_ai: "openai/gpt-4"
+      tier: "pro"
+      difficulty_level: 6
+      reasoning: "Data analysis, forecasting, reporting"
+
+  # HR
+  human_resources:
+    hr_manager:
+      primary_ai: "anthropic/claude-3-opus"
+      fallback_ai: "openai/gpt-4"
+      tier: "enterprise"
+      difficulty_level: 7
+      reasoning: "People management, strategy, empathy"
+      
+    recruiter:
+      primary_ai: "openai/gpt-4"
+      fallback_ai: "anthropic/claude-3-sonnet"
+      tier: "pro"
+      difficulty_level: 5
+      reasoning: "Candidate evaluation, communication"
+
+  # CUSTOMER SERVICE
+  customer_service:
+    support_manager:
+      primary_ai: "openai/gpt-4"
+      fallback_ai: "anthropic/claude-3-sonnet"
+      tier: "pro"
+      difficulty_level: 6
+      reasoning: "Problem solving, customer empathy"
+      
+    support_agent:
+      primary_ai: "openai/gpt-3.5-turbo"
+      fallback_ai: "anthropic/claude-3-haiku"
+      tier: "basic"
+      difficulty_level: 3
+      reasoning: "Simple queries, fast responses, scripted support"
+
+  # MANAGEMENT
+  management:
+    ceo:
+      primary_ai: "anthropic/claude-3-opus"
+      fallback_ai: "openai/gpt-4-turbo"
+      tier: "enterprise"
+      difficulty_level: 10
+      reasoning: "Strategic vision, complex decision making, leadership"
+      
+    project_manager:
+      primary_ai: "openai/gpt-4"
+      fallback_ai: "anthropic/claude-3-sonnet"
+      tier: "pro"
+      difficulty_level: 7
+      reasoning: "Planning, coordination, stakeholder management"
+
+  # LEGAL
+  legal:
+    legal_advisor:
+      primary_ai: "anthropic/claude-3-opus"
+      fallback_ai: "openai/gpt-4-turbo"
+      tier: "enterprise"
+      difficulty_level: 9
+      reasoning: "Legal reasoning, contracts, compliance analysis"
+
+# Cost Optimization Strategy
+cost_optimization:
+  rules:
+    - "Use basic tier for routine tasks (difficulty < 5)"
+    - "Use pro tier for standard professional work (difficulty 5-7)"
+    - "Use enterprise tier for critical/complex tasks (difficulty 8+)"
+    - "Auto-fallback to lower tier during non-critical hours"
+    - "Batch similar requests to optimize API calls"
+    - "Cache frequently asked questions"
+    - "Use open-source models (LLaMA) for internal testing"
+
+# Multi-AI Strategy
+multi_ai_strategy:
+  load_balancing:
+    enabled: true
+    strategy: "round-robin-with-fallback"
+    
+  cost_aware_routing:
+    enabled: true
+    daily_budget: 1000  # USD
+    auto_downgrade: true
+    
+  quality_monitoring:
+    enabled: true
+    min_quality_score: 0.8
+    auto_switch_on_poor_performance: true

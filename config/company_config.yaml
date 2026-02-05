@@ -1,0 +1,272 @@
+company:
+  name: "Autonomous AI Corporation"
+  vision: "Tam otonom, 7/24 çalışan yapay zeka destekli şirket"
+  mission: "Teknoloji, yaratıcılık ve inovasyonu birleştirerek dünya çapında ürünler geliştirmek"
+  
+  goals:
+    quarterly:
+      - "3 yeni mobil uygulama lansmanı"
+      - "2 oyun projesi tamamlama"
+      - "AI/ML ürün portföyü genişletme"
+      - "%30 gelir artışı"
+    
+    monthly:
+      - "Yeni proje başlatma"
+      - "Müşteri memnuniyeti %95+ tutma"
+      - "Takım verimliliği optimizasyonu"
+    
+    weekly:
+      - "Sprint hedeflerini tamamlama"
+      - "Kod kalite metriklerini iyileştirme"
+      - "Marketing kampanyaları yürütme"
+
+departments:
+  technology:
+    name: "Teknoloji & Yazılım"
+    manager: "CTO"
+    teams:
+      web_development:
+        - role: "Lead Developer"
+          name: "Alex Chen"
+          skills: ["architecture", "leadership", "full-stack"]
+        - role: "Backend Developer"
+          name: "Maria Garcia"
+          skills: ["python", "nodejs", "databases"]
+        - role: "Frontend Developer"
+          name: "John Smith"
+          skills: ["react", "vue", "typescript"]
+        - role: "Full Stack Developer"
+          name: "Sarah Johnson"
+          skills: ["javascript", "python", "devops"]
+        - role: "UI/UX Designer"
+          name: "Emma Wilson"
+          skills: ["figma", "user-research", "prototyping"]
+      
+      mobile_development:
+        - role: "iOS Developer"
+          name: "David Park"
+          skills: ["swift", "swiftui", "ios-sdk"]
+        - role: "Android Developer"
+          name: "Priya Sharma"
+          skills: ["kotlin", "android-sdk", "jetpack"]
+        - role: "Flutter Developer"
+          name: "Lucas Silva"
+          skills: ["flutter", "dart", "cross-platform"]
+        - role: "Mobile UI/UX Designer"
+          name: "Sophie Martin"
+          skills: ["mobile-design", "user-experience", "prototyping"]
+      
+      game_development:
+        - role: "Game Developer"
+          name: "Jake Morrison"
+          skills: ["unity", "unreal", "c++"]
+        - role: "Game Designer"
+          name: "Nina Kowalski"
+          skills: ["game-mechanics", "level-design", "storytelling"]
+        - role: "Character Artist"
+          name: "Yuki Tanaka"
+          skills: ["character-design", "illustration", "concept-art"]
+        - role: "3D Modeler"
+          name: "Omar Hassan"
+          skills: ["blender", "3d-modeling", "texturing"]
+        - role: "Animation Artist"
+          name: "Lila Patel"
+          skills: ["animation", "rigging", "motion-capture"]
+        - role: "Level Designer"
+          name: "Chris Anderson"
+          skills: ["level-design", "environment-art", "gameplay"]
+        - role: "Game Tester"
+          name: "Maya Rodriguez"
+          skills: ["qa", "bug-testing", "user-testing"]
+      
+      ai_ml:
+        - role: "AI/ML Engineer"
+          name: "Dr. Alan Turing"
+          skills: ["machine-learning", "deep-learning", "python"]
+        - role: "AI Research Scientist"
+          name: "Dr. Ada Lovelace"
+          skills: ["research", "algorithms", "neural-networks"]
+        - role: "NLP Specialist"
+          name: "Robert Kim"
+          skills: ["nlp", "transformers", "llms"]
+        - role: "Computer Vision Engineer"
+          name: "Zara Ahmed"
+          skills: ["computer-vision", "opencv", "image-processing"]
+        - role: "Prompt Engineer"
+          name: "Max Turner"
+          skills: ["prompt-engineering", "llm-optimization", "ai-agents"]
+        - role: "Data Scientist"
+          name: "Elena Popov"
+          skills: ["data-analysis", "statistics", "visualization"]
+        - role: "MLOps Engineer"
+          name: "James Lee"
+          skills: ["mlops", "kubernetes", "ci-cd"]
+      
+      infrastructure:
+        - role: "DevOps Engineer"
+          name: "Carlos Mendez"
+          skills: ["kubernetes", "docker", "aws"]
+        - role: "QA Engineer"
+          name: "Anna Schmidt"
+          skills: ["testing", "automation", "selenium"]
+        - role: "Database Administrator"
+          name: "Raj Patel"
+          skills: ["postgresql", "mongodb", "optimization"]
+        - role: "Security Engineer"
+          name: "Victor Ivanov"
+          skills: ["security", "penetration-testing", "compliance"]
+        - role: "Technical Writer"
+          name: "Grace Chen"
+          skills: ["documentation", "technical-writing", "communication"]
+
+  marketing:
+    name: "Marketing"
+    manager: "CMO"
+    team:
+      - role: "Marketing Manager"
+        name: "Jessica Brown"
+        skills: ["strategy", "campaign-management", "analytics"]
+      - role: "Content Creator"
+        name: "Tom Harris"
+        skills: ["content-writing", "copywriting", "storytelling"]
+      - role: "Social Media Manager"
+        name: "Mia Davis"
+        skills: ["social-media", "community-management", "engagement"]
+      - role: "SEO Specialist"
+        name: "Ryan Cooper"
+        skills: ["seo", "sem", "google-analytics"]
+      - role: "Graphic Designer"
+        name: "Olivia Taylor"
+        skills: ["graphic-design", "branding", "adobe-creative"]
+
+  business_development:
+    name: "İş Geliştirme"
+    manager: "VP of Business Development"
+    team:
+      - role: "Business Development Manager"
+        name: "Michael Chang"
+        skills: ["strategy", "partnerships", "negotiation"]
+      - role: "Sales Representative"
+        name: "Laura Martinez"
+        skills: ["sales", "client-relations", "closing"]
+      - role: "Partnership Manager"
+        name: "Kevin O'Brien"
+        skills: ["partnerships", "networking", "collaboration"]
+      - role: "Market Research Analyst"
+        name: "Diana Santos"
+        skills: ["market-research", "analysis", "trends"]
+
+  finance:
+    name: "Finans & Muhasebe"
+    manager: "CFO"
+    team:
+      - role: "CFO"
+        name: "Richard Thompson"
+        skills: ["finance", "strategy", "leadership"]
+      - role: "Accountant"
+        name: "Linda Wang"
+        skills: ["accounting", "bookkeeping", "tax"]
+      - role: "Budget Analyst"
+        name: "Ahmed Ali"
+        skills: ["budgeting", "forecasting", "analysis"]
+
+  human_resources:
+    name: "İnsan Kaynakları"
+    manager: "HR Director"
+    team:
+      - role: "HR Manager"
+        name: "Patricia Miller"
+        skills: ["hr-management", "recruitment", "employee-relations"]
+      - role: "Recruiter"
+        name: "Steven Clark"
+        skills: ["recruiting", "talent-acquisition", "interviewing"]
+      - role: "Employee Relations Specialist"
+        name: "Monica Lewis"
+        skills: ["employee-relations", "conflict-resolution", "culture"]
+
+  customer_service:
+    name: "Müşteri Hizmetleri"
+    manager: "Customer Service Director"
+    team:
+      - role: "Customer Support Manager"
+        name: "Jennifer White"
+        skills: ["support-management", "customer-satisfaction", "team-leadership"]
+      - role: "Support Agent"
+        name: "Daniel Green"
+        skills: ["customer-support", "problem-solving", "communication"]
+      - role: "Account Manager"
+        name: "Sophia Adams"
+        skills: ["account-management", "client-relations", "retention"]
+
+  management:
+    name: "Yönetim & Koordinasyon"
+    team:
+      - role: "CEO"
+        name: "Alexander Hunt"
+        skills: ["leadership", "vision", "strategy"]
+      - role: "Project Manager"
+        name: "Rachel Foster"
+        skills: ["project-management", "agile", "scrum"]
+      - role: "Operations Manager"
+        name: "Nathan Brooks"
+        skills: ["operations", "process-improvement", "efficiency"]
+
+  legal:
+    name: "Hukuk & Uyumluluk"
+    manager: "Chief Legal Officer"
+    team:
+      - role: "Legal Advisor"
+        name: "Victoria Stone"
+        skills: ["legal", "contracts", "compliance"]
+      - role: "Compliance Officer"
+        name: "Marcus Webb"
+        skills: ["compliance", "regulations", "risk-management"]
+
+meetings:
+  daily_standup:
+    time: "09:00"
+    duration: 15  # minutes
+    participants: "all_team_members"
+    format:
+      - "What did I do yesterday?"
+      - "What will I do today?"
+      - "Any blockers?"
+  
+  weekly_review:
+    day: "Friday"
+    time: "16:00"
+    duration: 60
+    participants: "department_heads"
+    format:
+      - "Week achievements"
+      - "Metrics review"
+      - "Next week planning"
+      - "Cross-department updates"
+  
+  monthly_planning:
+    day: 1  # First day of month
+    time: "10:00"
+    duration: 120
+    participants: "management_and_leads"
+    format:
+      - "Previous month review"
+      - "Goal achievement analysis"
+      - "Next month objectives"
+      - "Budget review"
+      - "Strategic initiatives"
+
+work_schedule:
+  mode: "24/7"
+  shifts:
+    - name: "Morning Shift"
+      hours: "00:00-08:00"
+    - name: "Day Shift"
+      hours: "08:00-16:00"
+    - name: "Evening Shift"
+      hours: "16:00-24:00"
+  
+  task_cycle: "continuous"
+  meeting_frequency:
+    standup: "daily"
+    review: "weekly"
+    planning: "monthly"

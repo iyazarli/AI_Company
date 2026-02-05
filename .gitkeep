@@ -1,0 +1,15 @@
+# Agents
+agents/__init__.py
+
+# Systems
+systems/__init__.py
+
+# Core
+core/__init__.py
+
+# Data directories
+data/
+data/logs/
+data/tasks/
+data/meetings/
+data/reports/
