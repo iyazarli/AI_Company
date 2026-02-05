@@ -17,9 +17,7 @@ import threading
 ROOT_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT_DIR))
 
-from core.company import AutonomousCompany
-from systems.ai_provider import AIProviderManager
-from systems.auto_config import AutoAIConfigurator
+# Circular import önlemek için lazy import - fonksiyon içinde import edilecek
 
 # Sayfa konfigürasyonu
 st.set_page_config(
@@ -127,6 +125,11 @@ def check_api_keys():
 def initialize_company():
     """Şirketi başlat"""
     try:
+        # Lazy import - circular dependency önlemek için
+        from core.company import AutonomousCompany
+        from systems.ai_provider import AIProviderManager
+        from systems.auto_config import AutoAIConfigurator
+        
         # Streamlit secrets'tan API keylerini environment'a yükle
         if hasattr(st, 'secrets'):
             try:
