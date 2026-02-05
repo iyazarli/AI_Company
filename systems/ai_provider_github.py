@@ -63,7 +63,7 @@ class RoleAIAssignment:
 
 class AIProviderManager:
     """AI sağlayıcı yöneticisi"""
-    def __init__(self, config_path: str = None, auto_mode: bool = True):
+    , auto_mode: bool = True):
         self.auto_mode = auto_mode
         
         # Otomatik mod - API key'lere göre konfigüre et
@@ -78,10 +78,10 @@ class AIProviderManager:
             # Manuel mod - YAML'dan yükle
             with open(config_path, 'r', encoding='utf-8') as f:
                 self.config = yaml.safe_load(f)
-                        self.providers: Dict[str, Dict] = self.config.get('ai_providers', {})
-                        self.role_assignments: Dict[str, Dict] = self.config.get('role_assignments', {})
+            self.providers: Dict[str, Dict] = self.config.get('ai_providers', {})
+            self.role_assignments: Dict[str, Dict] = self.config.get('role_assignments', {})
             self.cost_optimization = self.config.get('cost_optimization', {})
-            self.auto_config = None
+            self.auto_config = Nonesignments', {})
         self.cost_optimization = self.config.get('cost_optimization', {})
         
         self.api_keys = self._load_api_keys()
