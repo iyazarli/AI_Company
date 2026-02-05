@@ -186,6 +186,9 @@ class AIProviderManager:
             difficulty_level=5,
                 reasoning="Fallback model"
                 difficulty_level=config['difficulty_level'],
+        # Varsayılan AI (eğer bulunamazsa)
+        return RoleAIAssignment(
+            role=role,
             primary_ai="openai/gpt-4",
             fallback_ai="anthropic/claude-3-sonnet",
             tier=AITier.PRO,
