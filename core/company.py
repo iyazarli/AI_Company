@@ -9,6 +9,9 @@ import yaml
 from agents.factory import AgentFactory
 from agents.ai_agent import AIAgent, ManagerAgent, ExecutiveAgent
 
+
+import logging
+logger = logging.getLogger(__name__)
 # Lazy import circular dependency önlemek için
 from systems.meeting import MeetingSystem
 from systems.task import TaskManager, TaskPriority
@@ -20,7 +23,7 @@ class AutonomousCompany:
     """Otonom AI Şirketi - Ana sınıf"""
     
     def __init__(self, config_path: str = "config/company_config.yaml"):
-        print("🏢 Otonom AI Şirketi başlatılıyor...\n")
+        logger.info("🏢 Otonom AI Şirketi başlatılıyor...\n")
         
         # Config yükle
         with open(config_path, 'r', encoding='utf-8') as f:
@@ -44,11 +47,11 @@ class AutonomousCompany:
         self.is_running = False
         self.start_time = None
         
-        print(f"✅ {self.company_name} hazır!\n")
+        logger.info(f"✅ {self.company_name} hazır!\n")
     
     async def initialize(self):
         """Şirketi başlat ve ajanları oluştur"""
-        print("🚀 Şirket başlatılıyor...\n")
+        logger.info("🚀 Şirket başlatılıyor...\n")
         
         # Ajanları oluştur
         self.agents = self.agent_factory.create_all_agents()
@@ -64,24 +67,24 @@ class AutonomousCompany:
         self.goal_manager.load_goals_from_config(self.config)
         
         
-        print(f"\n{'='*60}")
-        print(f"🏢 {self.company_name}")
-        print(f"{'='*60}")
-        print(f"👁️  Vizyon: {self.vision}")
-        print(f"🎯 Misyon: {self.mission}")
-        print(f"\n📊 Şirket Yapısı:")
-        print(f"   • Toplam Çalışan: {len(self.agents)}")
-        print(f"   • Departman Sayısı: {len(self.departments)}")
-        print(f"   • Yönetici Sayısı: {len(self.agent_factory.get_managers())}")
-        print(f"   • Üst Yönetim: {len(self.agent_factory.get_executives())}")
-        print(f"{'='*60}\n")
+        logger.info(f"\n{'='*60}")
+        logger.info(f"🏢 {self.company_name}")
+        logger.info(f"{'='*60}")
+        logger.info(f"👁️  Vizyon: {self.vision}")
+        logger.info(f"🎯 Misyon: {self.mission}")
+        logger.info(f"\n📊 Şirket Yapısı:")
+        logger.info(f"   • Toplam Çalışan: {len(self.agents)}")
+        logger.info(f"   • Departman Sayısı: {len(self.departments)}")
+        logger.info(f"   • Yönetici Sayısı: {len(self.agent_factory.get_managers())}")
+        logger.info(f"   • Üst Yönetim: {len(self.agent_factory.get_executives())}")
+        logger.info(f"{'='*60}\n")
         
         self.is_running = True
         self.start_time = datetime.now()
     
     async def morning_standup(self):
         """Sabah standup toplantıları - Her departman için"""
-        print("\n☀️  SABAH STANDUP TOPLANTILARI BAŞLIYOR\n")
+        logger.info("\n☀️  SABAH STANDUP TOPLANTILARI BAŞLIYOR\n")
         
         for dept_name, dept_agents in self.departments.items():
             if len(dept_agents) > 0:
@@ -109,7 +112,7 @@ class AutonomousCompany:
     
     async def weekly_review(self):
         """Haftalık değerlendirme toplantıları"""
-        print("\n📊 HAFTALIK DEĞERLENDİRME TOPLANTILARI\n")
+        logger.info("\n📊 HAFTALIK DEĞERLENDİRME TOPLANTILARI\n")
         
         # Departman başları toplantısı
         managers = self.agent_factory.get_managers()
@@ -130,7 +133,7 @@ class AutonomousCompany:
     
     async def monthly_planning(self):
         """Aylık planlama toplantısı"""
-        print("\n📈 AYLIK PLANLAMA TOPLANTISI\n")
+        logger.info("\n📈 AYLIK PLANLAMA TOPLANTISI\n")
         
         executives = self.agent_factory.get_executives()
         managers = self.agent_factory.get_managers()
@@ -153,7 +156,7 @@ class AutonomousCompany:
     
     async def assign_tasks_to_departments(self):
         """Departmanlara görev dağıt"""
-        print("\n📋 GÖREV DAĞITIMI BAŞLIYOR\n")
+        logger.info("\n📋 GÖREV DAĞITIMI BAŞLIYOR\n")
         
         for dept_name, dept_agents in self.departments.items():
             # Departman yöneticisini bul
@@ -175,7 +178,7 @@ class AutonomousCompany:
     
     async def simulate_work_day(self):
         """Bir iş gününü simüle et"""
-        print("\n🌅 YENİ İŞ GÜNÜ BAŞLIYOR\n")
+        logger.info("\n🌅 YENİ İŞ GÜNÜ BAŞLIYOR\n")
         
         # 1. Sabah standup
         await self.morning_standup()
@@ -184,7 +187,7 @@ class AutonomousCompany:
         await self.assign_tasks_to_departments()
         
         # 3. Görevleri çalıştır (simüle)
-        print("\n⚙️  ÇALIŞANLAR GÖREVLERİNİ YÜRÜTÜYOR...\n")
+        logger.info("\n⚙️  ÇALIŞANLAR GÖREVLERİNİ YÜRÜTÜYOR...\n")
         await asyncio.sleep(5)
         
         # 4. Departmanlar arası iş birliği örneği
@@ -203,14 +206,14 @@ class AutonomousCompany:
     
     async def run_continuous(self, days: int = 1):
         """Sürekli çalışma modu - Belirtilen gün sayısı kadar"""
-        print(f"\n🔄 SÜREKLİ ÇALIŞMA MODU BAŞLATILIYOR ({days} gün)\n")
+        logger.info(f"\n🔄 SÜREKLİ ÇALIŞMA MODU BAŞLATILIYOR ({days} gün)\n")
         
         await self.initialize()
         
         for day in range(days):
-            print(f"\n{'='*60}")
-            print(f"📅 GÜN {day + 1}")
-            print(f"{'='*60}\n")
+            logger.info(f"\n{'='*60}")
+            logger.info(f"📅 GÜN {day + 1}")
+            logger.info(f"{'='*60}\n")
             
             # Günlük işler
             await self.simulate_work_day()
@@ -225,17 +228,17 @@ class AutonomousCompany:
             
             # Gece molası simülasyonu
             if day < days - 1:
-                print("\n🌙 Gece vardiyası devam ediyor... (7/24 çalışma)\n")
+                logger.info("\n🌙 Gece vardiyası devam ediyor... (7/24 çalışma)\n")
                 await asyncio.sleep(3)
     
     async def quick_demo(self):
         """Hızlı demo - Tüm özellikleri göster"""
-        print("\n🎬 HIZLI DEMO MODU\n")
+        logger.info("\n🎬 HIZLI DEMO MODU\n")
         
         await self.initialize()
         
         # 1. Sabah standup (1 departman)
-        print("\n1️⃣  Sabah Standup Örneği\n")
+        logger.info("\n1️⃣  Sabah Standup Örneği\n")
         tech_agents = self.departments.get('technology', [])[:5]
         if tech_agents:
             meeting = await self.meeting_system.schedule_daily_standup(
@@ -249,7 +252,7 @@ class AutonomousCompany:
         await asyncio.sleep(2)
         
         # 2. Görev atama
-        print("\n2️⃣  Görev Atama Örneği\n")
+        logger.info("\n2️⃣  Görev Atama Örneği\n")
         managers = self.agent_factory.get_managers()
         if managers:
             manager = managers[0]
@@ -260,7 +263,7 @@ class AutonomousCompany:
         await asyncio.sleep(2)
         
         # 3. Departmanlar arası iş birliği
-        print("\n3️⃣  Departmanlar Arası İş Birliği\n")
+        logger.info("\n3️⃣  Departmanlar Arası İş Birliği\n")
         await self.collaboration_system.cross_department_meeting(
             departments=['technology', 'marketing'],
             topic="AI Ürün Lansmanı",
@@ -270,7 +273,7 @@ class AutonomousCompany:
         await asyncio.sleep(2)
         
         # 4. Rapor
-        print("\n4️⃣  Görev Raporu\n")
+        logger.info("\n4️⃣  Görev Raporu\n")
         print(self.task_manager.generate_task_report())
         
         # 5. Şirket özeti
@@ -278,26 +281,26 @@ class AutonomousCompany:
     
     async def print_company_status(self):
         """Şirket durumunu yazdır"""
-        print(f"\n{'='*60}")
-        print(f"📊 ŞİRKET DURUM RAPORU")
-        print(f"{'='*60}\n")
+        logger.info(f"\n{'='*60}")
+        logger.info(f"📊 ŞİRKET DURUM RAPORU")
+        logger.info(f"{'='*60}\n")
         
-        print(f"🏢 Şirket: {self.company_name}")
-        print(f"⏱️  Çalışma Süresi: {datetime.now() - self.start_time if self.start_time else 'N/A'}")
-        print(f"👥 Toplam Çalışan: {len(self.agents)}")
+        logger.info(f"🏢 Şirket: {self.company_name}")
+        logger.info(f"⏱️  Çalışma Süresi: {datetime.now() - self.start_time if self.start_time else 'N/A'}")
+        logger.info(f"👥 Toplam Çalışan: {len(self.agents)}")
         
-        print(f"\n📋 Görev Durumu:")
+        logger.info(f"\n📋 Görev Durumu:")
         stats = self.task_manager.get_task_statistics()
-        print(f"   • Toplam: {stats['total_tasks']}")
-        print(f"   • Tamamlanan: {stats['completed']}")
-        print(f"   • Devam Eden: {stats['in_progress']}")
-        print(f"   • Tamamlanma: %{stats['completion_rate']:.1f}")
+        logger.info(f"   • Toplam: {stats['total_tasks']}")
+        logger.info(f"   • Tamamlanan: {stats['completed']}")
+        logger.info(f"   • Devam Eden: {stats['in_progress']}")
+        logger.info(f"   • Tamamlanma: %{stats['completion_rate']:.1f}")
         
-        print(f"\n📅 Toplantılar:")
-        print(f"   • Geçmiş Toplantı: {len(self.meeting_system.meeting_history)}")
-        print(f"   • Planlanan: {len(self.meeting_system.get_upcoming_meetings())}")
+        logger.info(f"\n📅 Toplantılar:")
+        logger.info(f"   • Geçmiş Toplantı: {len(self.meeting_system.meeting_history)}")
+        logger.info(f"   • Planlanan: {len(self.meeting_system.get_upcoming_meetings())}")
         
-        print(f"\n{'='*60}\n")
+        logger.info(f"\n{'='*60}\n")
     
     def get_ceo(self) -> Optional[ExecutiveAgent]:
         """CEO'yu al"""
@@ -308,10 +311,10 @@ class AutonomousCompany:
     
     async def shutdown(self):
         """Şirketi kapat"""
-        print("\n🛑 Şirket kapatılıyor...")
+        logger.info("\n🛑 Şirket kapatılıyor...")
         self.is_running = False
         
         # Final rapor
         await self.print_company_status()
         
-        print("✅ Şirket başarıyla kapatıldı.\n")
+        logger.info("✅ Şirket başarıyla kapatıldı.\n")

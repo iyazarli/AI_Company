@@ -32,7 +32,7 @@ st.markdown("---")
 try:
     response = requests.get(f"{API_URL}/health", timeout=2)
     api_available = response.status_code == 200
-except:
+except Exception as e:
     api_available = False
 
 if not api_available:
@@ -66,7 +66,7 @@ refresh_interval = st.sidebar.slider("Yenileme Süresi (saniye)", 1, 30, 5)
 try:
     status_response = requests.get(f"{API_URL}/api/status")
     status = status_response.json()
-except:
+except Exception as e:
     st.error("API'den veri alınamadı")
     st.stop()
 
@@ -183,7 +183,7 @@ with col_right:
             for dept in dept_data['departments'][:5]:
                 st.write(f"• {dept['name']}: {dept['total']} çalışan")
         
-        except:
+        except Exception as e:
             st.warning("Departman bilgisi alınamadı")
     
     st.markdown("---")
@@ -204,7 +204,7 @@ with col_right:
         else:
             st.info("AI atama bilgisi yok")
     
-    except:
+    except Exception as e:
         st.warning("İstatistikler alınamadı")
     
     st.markdown("---")
@@ -216,14 +216,14 @@ with col_right:
         try:
             requests.post(f"{API_URL}/api/meetings/standup")
             st.success("Toplantı başlatıldı!")
-        except:
+        except Exception as e:
             st.error("Toplantı başlatılamadı")
     
     if st.button("💼 Bir Gün Simüle Et", use_container_width=True):
         try:
             requests.post(f"{API_URL}/api/simulate/day")
             st.success("Simülasyon başlatıldı!")
-        except:
+        except Exception as e:
             st.error("Simülasyon başlatılamadı")
 
 st.markdown("---")

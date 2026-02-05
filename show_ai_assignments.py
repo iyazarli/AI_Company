@@ -4,6 +4,9 @@ Show AI Assignments - AI atamalarını göster
 from systems.ai_provider import AIProviderManager
 
 
+
+import logging
+logger = logging.getLogger(__name__)
 def main():
     """AI atama raporunu göster"""
     
@@ -15,23 +18,23 @@ def main():
     # Tier istatistikleri
     stats = provider_manager.get_tier_statistics()
     
-    print("\n📊 TIER DAĞILIMI:")
-    print(f"   Free/Basic: {stats.get('free', 0) + stats.get('basic', 0)} çalışan")
-    print(f"   Pro: {stats.get('pro', 0)} çalışan")
-    print(f"   Enterprise: {stats.get('enterprise', 0)} çalışan")
+    logger.info("\n📊 TIER DAĞILIMI:")
+    logger.info(f"   Free/Basic: {stats.get('free', 0) + stats.get('basic', 0)} çalışan")
+    logger.info(f"   Pro: {stats.get('pro', 0)} çalışan")
+    logger.info(f"   Enterprise: {stats.get('enterprise', 0)} çalışan")
     
     total = sum(stats.values())
     if total > 0:
-        print(f"\n💰 MALIYET TAHMİNİ:")
-        print(f"   Basic tier (%{stats.get('basic', 0)/total*100:.1f}): ~$50-100/ay")
-        print(f"   Pro tier (%{stats.get('pro', 0)/total*100:.1f}): ~$500-1000/ay")
-        print(f"   Enterprise tier (%{stats.get('enterprise', 0)/total*100:.1f}): ~$2000-5000/ay")
-        print(f"   \nTOPLAM TAHMİNİ: ~$2500-6000/ay")
+        logger.info(f"\n💰 MALIYET TAHMİNİ:")
+        logger.info(f"   Basic tier (%{stats.get('basic', 0)/total*100:.1f}): ~$50-100/ay")
+        logger.info(f"   Pro tier (%{stats.get('pro', 0)/total*100:.1f}): ~$500-1000/ay")
+        logger.info(f"   Enterprise tier (%{stats.get('enterprise', 0)/total*100:.1f}): ~$2000-5000/ay")
+        logger.info(f"   \nTOPLAM TAHMİNİ: ~$2500-6000/ay")
     
     # Örnek senaryolar
-    print("\n\n" + "="*80)
+    logger.info("\n\n" + "="*80)
     print("🎯 ÖRNEK GÖREV ATAMALARI")
-    print("="*80 + "\n")
+    logger.info("="*80 + "\n")
     
     example_scenarios = [
         ("Lead Developer", "technology", "Karmaşık mimari tasarım", 9),
@@ -44,10 +47,10 @@ def main():
     for role, dept, task, difficulty in example_scenarios:
         result = provider_manager.get_best_ai_for_task(role, dept, task, difficulty)
         
-        print(f"👤 {role} - {task}")
-        print(f"   🤖 Seçilen AI: {result['selected_ai']}")
-        print(f"   📊 Zorluk: {difficulty}/10")
-        print(f"   💡 Neden: {result['reason']}")
+        logger.info(f"👤 {role} - {task}")
+        logger.info(f"   🤖 Seçilen AI: {result['selected_ai']}")
+        logger.info(f"   📊 Zorluk: {difficulty}/10")
+        logger.info(f"   💡 Neden: {result['reason']}")
         print()
 
 

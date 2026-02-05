@@ -7,6 +7,9 @@ from pydantic import BaseModel
 import uuid
 from agents.base_agent import Task
 
+
+import logging
+logger = logging.getLogger(__name__)
 if TYPE_CHECKING:
     from agents.ai_agent import AIAgent, ManagerAgent
 
@@ -61,10 +64,10 @@ class TaskManager:
         self.tasks[task.id] = task
         self.task_queue.append(task)
         
-        print(f"📋 Yeni görev oluşturuldu: {title}")
-        print(f"   👤 Atanan: {assigned_to}")
-        print(f"   ⚡ Öncelik: {priority}")
-        print(f"   📅 Son tarih: {task.deadline.strftime('%Y-%m-%d')}")
+        logger.info(f"📋 Yeni görev oluşturuldu: {title}")
+        logger.info(f"   👤 Atanan: {assigned_to}")
+        logger.info(f"   ⚡ Öncelik: {priority}")
+        logger.info(f"   📅 Son tarih: {task.deadline.strftime('%Y-%m-%d')}")
         
         return task
     
@@ -73,7 +76,7 @@ class TaskManager:
         success = await agent.receive_task(task)
         if success:
             task.status = TaskStatus.PENDING
-            print(f"✅ Görev atandı: {task.title} -> {agent.name}")
+            logger.info(f"✅ Görev atandı: {task.title} -> {agent.name}")
         return success
     
     def update_task_status(self, task_id: str, status: str) -> bool:
@@ -88,8 +91,8 @@ class TaskManager:
                 if task in self.task_queue:
                     self.task_queue.remove(task)
             
-            print(f"🔄 Görev durumu güncellendi: {task.title}")
-            print(f"   {old_status} -> {status}")
+            logger.info(f"🔄 Görev durumu güncellendi: {task.title}")
+            logger.info(f"   {old_status} -> {status}")
             return True
         return False
     
@@ -159,8 +162,8 @@ class TaskManager:
         # Yöneticiden görev planı iste
         sprint_plan = await manager.plan_sprint(duration_weeks=2)
         
-        print(f"\n📊 {manager.name} sprint planı oluşturdu:")
-        print(f"{sprint_plan['plan']}\n")
+        logger.info(f"\n📊 {manager.name} sprint planı oluşturdu:")
+        logger.info(f"{sprint_plan['plan']}\n")
         
         # Basit oto-atama: Her agenta bir görev
         for i, agent in enumerate(available_agents):

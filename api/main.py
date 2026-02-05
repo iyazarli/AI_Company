@@ -74,7 +74,7 @@ async def broadcast_update(data: dict):
     for websocket in active_websockets:
         try:
             await websocket.send_json(data)
-        except:
+        except Exception as e:
             disconnected.append(websocket)
     
     # Kopan bağlantıları temizle

@@ -6,6 +6,9 @@ from datetime import datetime, time
 from pydantic import BaseModel
 import asyncio
 
+
+import logging
+logger = logging.getLogger(__name__)
 # Circular import önlemek için TYPE_CHECKING kullan
 if TYPE_CHECKING:
     from agents.ai_agent import AIAgent
@@ -67,7 +70,7 @@ class MeetingSystem:
         )
         
         self.meetings.append(meeting)
-        print(f"📅 Toplantı planlandı: {meeting.title} - {scheduled_time}")
+        logger.info(f"📅 Toplantı planlandı: {meeting.title} - {scheduled_time}")
         return meeting
     
     async def conduct_daily_standup(
@@ -76,11 +79,11 @@ class MeetingSystem:
         agents: List  # Type hint'i kaldırdık, runtime'da any list kabul edecek
     ) -> Dict:
         """Günlük standup toplantısını yürüt"""
-        print(f"\n{'='*60}")
-        print(f"🎤 TOPLANTI BAŞLIYOR: {meeting.title}")
-        print(f"🕐 Saat: {meeting.scheduled_time}")
-        print(f"👥 Katılımcılar: {len(agents)} kişi")
-        print(f"{'='*60}\n")
+        logger.info(f"\n{'='*60}")
+        logger.info(f"🎤 TOPLANTI BAŞLIYOR: {meeting.title}")
+        logger.info(f"🕐 Saat: {meeting.scheduled_time}")
+        logger.info(f"👥 Katılımcılar: {len(agents)} kişi")
+        logger.info(f"{'='*60}\n")
         
         meeting.status = "in_progress"
         updates = []
@@ -89,20 +92,20 @@ class MeetingSystem:
             update = await agent.daily_standup_update()
             updates.append(update)
             
-            print(f"👤 {agent.name} ({agent.role}):")
-            print(f"   ✅ Dün: {', '.join(update['yesterday']) if update['yesterday'] else 'Görev yok'}")
-            print(f"   🎯 Bugün: {', '.join(update['today']) if update['today'] else 'Görev yok'}")
+            logger.info(f"👤 {agent.name} ({agent.role}):")
+            logger.info(f"   ✅ Dün: {', '.join(update['yesterday']) if update['yesterday'] else 'Görev yok'}")
+            logger.info(f"   🎯 Bugün: {', '.join(update['today']) if update['today'] else 'Görev yok'}")
             if update['blockers']:
-                print(f"   ⚠️  Engeller: {', '.join(update['blockers'])}")
+                logger.info(f"   ⚠️  Engeller: {', '.join(update['blockers'])}")
             print()
         
         meeting.status = "completed"
         meeting.notes = updates
         self.meeting_history.append(meeting)
         
-        print(f"{'='*60}")
-        print(f"✅ TOPLANTI TAMAMLANDI")
-        print(f"{'='*60}\n")
+        logger.info(f"{'='*60}")
+        logger.info(f"✅ TOPLANTI TAMAMLANDI")
+        logger.info(f"{'='*60}\n")
         
         return {
             "meeting_id": meeting.id,
@@ -148,9 +151,9 @@ class MeetingSystem:
         agents: List
     ) -> Dict:
         """Haftalık değerlendirme toplantısını yürüt"""
-        print(f"\n{'='*60}")
-        print(f"📊 HAFTALIK DEĞERLENDİRME: {meeting.title}")
-        print(f"{'='*60}\n")
+        logger.info(f"\n{'='*60}")
+        logger.info(f"📊 HAFTALIK DEĞERLENDİRME: {meeting.title}")
+        logger.info(f"{'='*60}\n")
         
         meeting.status = "in_progress"
         contributions = []
@@ -162,16 +165,16 @@ class MeetingSystem:
             })
             contributions.append(contribution)
             
-            print(f"👤 {agent.name} ({agent.role}):")
-            print(f"   {contribution['contribution']}\n")
+            logger.info(f"👤 {agent.name} ({agent.role}):")
+            logger.info(f"   {contribution['contribution']}\n")
         
         meeting.status = "completed"
         meeting.notes = contributions
         self.meeting_history.append(meeting)
         
-        print(f"{'='*60}")
-        print(f"✅ HAFTALIK DEĞERLENDİRME TAMAMLANDI")
-        print(f"{'='*60}\n")
+        logger.info(f"{'='*60}")
+        logger.info(f"✅ HAFTALIK DEĞERLENDİRME TAMAMLANDI")
+        logger.info(f"{'='*60}\n")
         
         return {
             "meeting_id": meeting.id,
@@ -216,9 +219,9 @@ class MeetingSystem:
         agents: List
     ) -> Dict:
         """Aylık planlama toplantısını yürüt"""
-        print(f"\n{'='*60}")
-        print(f"📈 AYLIK PLANLAMA TOPLANTISI")
-        print(f"{'='*60}\n")
+        logger.info(f"\n{'='*60}")
+        logger.info(f"📈 AYLIK PLANLAMA TOPLANTISI")
+        logger.info(f"{'='*60}\n")
         
         meeting.status = "in_progress"
         
@@ -230,16 +233,16 @@ class MeetingSystem:
                     "Gelecek ay için şirket stratejisini belirle"
                 )
                 strategic_plans.append(plan)
-                print(f"🎯 {agent.name} - Stratejik Plan:")
-                print(f"   {plan['decision']}\n")
+                logger.info(f"🎯 {agent.name} - Stratejik Plan:")
+                logger.info(f"   {plan['decision']}\n")
         
         meeting.status = "completed"
         meeting.decisions = strategic_plans
         self.meeting_history.append(meeting)
         
-        print(f"{'='*60}")
-        print(f"✅ AYLIK PLANLAMA TAMAMLANDI")
-        print(f"{'='*60}\n")
+        logger.info(f"{'='*60}")
+        logger.info(f"✅ AYLIK PLANLAMA TAMAMLANDI")
+        logger.info(f"{'='*60}\n")
         
         return {
             "meeting_id": meeting.id,

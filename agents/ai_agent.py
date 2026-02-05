@@ -10,6 +10,9 @@ import os
 from systems.ai_provider import AIProviderManager
 
 
+
+import logging
+logger = logging.getLogger(__name__)
 class AIAgent(BaseAgent):
     """LLM destekli AI Agent"""
     
@@ -41,7 +44,7 @@ class AIAgent(BaseAgent):
             # LLM client oluştur
             self.llm = self.ai_provider_manager.create_llm_client(self.assigned_ai)
             
-            print(f"🤖 {name} -> {self.assigned_ai} ({self.ai_tier.value})")
+            logger.info(f"🤖 {name} -> {self.assigned_ai} ({self.ai_tier.value})")
         
         self.system_prompt = self._create_system_prompt()
     
@@ -89,7 +92,7 @@ Detaylı bir çözüm üret ve sonucu açıkla.
         response = await self.llm.ainvoke(messages)
         result = response.content
         
-        print(f"🎯 {self.name} - Görev tamamlandı: {task.title}")
+        logger.info(f"🎯 {self.name} - Görev tamamlandı: {task.title}")
         return result
     
     async def generate_meeting_contribution(self, meeting_info: Dict) -> Dict:
@@ -197,7 +200,7 @@ class ManagerAgent(AIAgent):
         if assignee in self.team_members:
             task.assigned_by = self.name
             task.assigned_to = assignee
-            print(f"📋 {self.name} -> {assignee}: Yeni görev atandı - {task.title}")
+            logger.info(f"📋 {self.name} -> {assignee}: Yeni görev atandı - {task.title}")
             return True
         return False
     

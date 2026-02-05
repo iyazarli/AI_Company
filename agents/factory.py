@@ -2,9 +2,12 @@
 Agent Factory - YAML config'den ajanları oluştur
 """
 import yaml
+import logging
 from typing import Dict, List
 from agents.ai_agent import AIAgent, ManagerAgent, ExecutiveAgent
 from systems.ai_provider import AIProviderManager
+
+logger = logging.getLogger(__name__)
 
 
 class AgentFactory:
@@ -53,7 +56,7 @@ class AgentFactory:
         legal_dept = departments_config.get('legal', {})
         self._create_department_agents('legal', legal_dept)
         
-        print(f"✅ Toplam {len(self.agents)} AI çalışan oluşturuldu")
+        logger.info(f"✅ Toplam {len(self.agents)} AI çalışan oluşturuldu")
         return self.agents
     
     def _create_tech_agents(self, tech_config: Dict):

@@ -10,6 +10,9 @@ import asyncio
 from systems.auto_config import get_auto_configurator
 
 
+
+import logging
+logger = logging.getLogger(__name__)
 class AITier(str, Enum):
     """AI Tier seviyeleri"""
     FREE = "free"
@@ -253,11 +256,11 @@ class AIProviderManager:
             
             # Diğer provider'lar için fallback
             else:
-                print(f"⚠️ {provider} desteklenmiyor, mevcut provider kullanılıyor")
+                logger.info(f"⚠️ {provider} desteklenmiyor, mevcut provider kullanılıyor")
                 return self._create_fallback_client()
                 
         except Exception as e:
-            print(f"⚠️ LLM client oluşturulamadı: {e}, fallback kullanılıyor")
+            logger.info(f"⚠️ LLM client oluşturulamadı: {e}, fallback kullanılıyor")
             return self._create_fallback_client()
     
     def _create_fallback_client(self):
@@ -330,7 +333,7 @@ class AIProviderManager:
             
             # Diğer provider'lar için fallback
             else:
-                print(f"⚠️ {provider} desteklenmiyor, OpenAI kullanılıyor")
+                logger.info(f"⚠️ {provider} desteklenmiyor, OpenAI kullanılıyor")
                 from langchain_openai import ChatOpenAI
                 return ChatOpenAI(
                     model="gpt-4",
@@ -339,7 +342,7 @@ class AIProviderManager:
                 )
                 
         except Exception as e:
-            print(f"❌ LLM client oluşturulamadı: {e}")
+            logger.info(f"❌ LLM client oluşturulamadı: {e}")
             # Fallback to GPT-3.5
             from langchain_openai import ChatOpenAI
             return ChatOpenAI(

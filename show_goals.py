@@ -4,6 +4,9 @@ Show Goals - Mevcut hedefleri göster ve takip et
 import asyncio
 from dotenv import load_dotenv
 
+
+import logging
+logger = logging.getLogger(__name__)
 load_dotenv()
 
 from core.company import AutonomousCompany
@@ -19,17 +22,17 @@ async def main():
     # Config'den hedefleri yükle
     company.goal_manager.load_goals_from_config(company.config)
     
-    print("\n" + "="*60)
+    logger.info("\n" + "="*60)
     print("🎯 ŞİRKET HEDEFLERİ")
-    print("="*60 + "\n")
+    logger.info("="*60 + "\n")
     
-    print("Ne görmek istersiniz?")
-    print("1. Tüm hedefler")
-    print("2. Quarterly hedefler")
-    print("3. Monthly hedefler")
-    print("4. Weekly hedefler")
-    print("5. Departman hedefleri")
-    print("6. Hedef ilerlemesi güncelle")
+    logger.info("Ne görmek istersiniz?")
+    logger.info("1. Tüm hedefler")
+    logger.info("2. Quarterly hedefler")
+    logger.info("3. Monthly hedefler")
+    logger.info("4. Weekly hedefler")
+    logger.info("5. Departman hedefleri")
+    logger.info("6. Hedef ilerlemesi güncelle")
     
     choice = input("\nSeçim (1-6): ").strip()
     
@@ -47,39 +50,39 @@ async def main():
         period = period_map[choice]
         goals = company.goal_manager.get_active_goals(period)
         
-        print(f"\n📅 {period.value.upper()} HEDEFLERİ:\n")
+        logger.info(f"\n📅 {period.value.upper()} HEDEFLERİ:\n")
         for i, goal in enumerate(goals, 1):
-            print(f"{i}. {goal.title}")
-            print(f"   Sorumlu: {goal.owner}")
-            print(f"   İlerleme: %{goal.progress:.0f}")
+            logger.info(f"{i}. {goal.title}")
+            logger.info(f"   Sorumlu: {goal.owner}")
+            logger.info(f"   İlerleme: %{goal.progress:.0f}")
             if goal.deadline:
-                print(f"   Son Tarih: {goal.deadline.strftime('%Y-%m-%d')}")
+                logger.info(f"   Son Tarih: {goal.deadline.strftime('%Y-%m-%d')}")
             print()
     
     elif choice == "5":
         # Departman hedefleri
-        print("\nDepartman seçin:")
+        logger.info("\nDepartman seçin:")
         for i, dept in enumerate(company.departments.keys(), 1):
-            print(f"{i}. {dept}")
+            logger.info(f"{i}. {dept}")
         
         dept_idx = int(input("\nSeçim: ")) - 1
         dept_name = list(company.departments.keys())[dept_idx]
         
         goals = company.goal_manager.get_department_goals(dept_name)
         
-        print(f"\n🏢 {dept_name.upper()} HEDEFLERİ:\n")
+        logger.info(f"\n🏢 {dept_name.upper()} HEDEFLERİ:\n")
         for goal in goals:
-            print(f"• {goal.title}")
-            print(f"  İlerleme: %{goal.progress:.0f}")
+            logger.info(f"• {goal.title}")
+            logger.info(f"  İlerleme: %{goal.progress:.0f}")
             print()
     
     elif choice == "6":
         # İlerleme güncelle
         all_goals = company.goal_manager.get_active_goals()
         
-        print("\nHangi hedefin ilerlemesini güncellemek istersiniz?\n")
+        logger.info("\nHangi hedefin ilerlemesini güncellemek istersiniz?\n")
         for i, goal in enumerate(all_goals, 1):
-            print(f"{i}. {goal.title} (Mevcut: %{goal.progress:.0f})")
+            logger.info(f"{i}. {goal.title} (Mevcut: %{goal.progress:.0f})")
         
         goal_idx = int(input("\nSeçim: ")) - 1
         goal = all_goals[goal_idx]

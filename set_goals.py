@@ -5,6 +5,9 @@ import asyncio
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
+
+import logging
+logger = logging.getLogger(__name__)
 load_dotenv()
 
 from core.company import AutonomousCompany
@@ -14,7 +17,7 @@ from systems.goals import GoalManager, GoalSettingInterface, GoalPeriod
 async def main():
     """Hedef belirleme arayüzü"""
     
-    print("""
+    logger.info("""
 ╔══════════════════════════════════════════════════════════════╗
 ║          🎯 ŞİRKET HEDEFLERİNİ BELİRLE 🎯                   ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -24,11 +27,11 @@ async def main():
     company = AutonomousCompany()
     await company.initialize()
     
-    print("\nHedef belirleme yöntemi seçin:")
-    print("1. İnteraktif (Tek tek hedef gir)")
-    print("2. Hızlı (Hazır şablon)")
-    print("3. Config'den yükle")
-    print("4. Departman hedefleri")
+    logger.info("\nHedef belirleme yöntemi seçin:")
+    logger.info("1. İnteraktif (Tek tek hedef gir)")
+    logger.info("2. Hızlı (Hazır şablon)")
+    logger.info("3. Config'den yükle")
+    logger.info("4. Departman hedefleri")
     
     choice = input("\nSeçim (1-4): ").strip()
     
@@ -36,11 +39,11 @@ async def main():
     
     if choice == "1":
         # İnteraktif mod
-        print("\nKaç hedef belirlemek istiyorsunuz?")
+        logger.info("\nKaç hedef belirlemek istiyorsunuz?")
         num_goals = int(input("Sayı: ") or "1")
         
         for i in range(num_goals):
-            print(f"\n--- Hedef {i+1}/{num_goals} ---")
+            logger.info(f"\n--- Hedef {i+1}/{num_goals} ---")
             goal_interface.interactive_goal_setting()
     
     elif choice == "2":
@@ -82,14 +85,14 @@ async def main():
     
     elif choice == "3":
         # Config'den yükle
-        print("\nConfig'den hedefler yükleniyor...")
+        logger.info("\nConfig'den hedefler yükleniyor...")
         company.goal_manager.load_goals_from_config(company.config)
     
     elif choice == "4":
         # Departman hedefleri
-        print("\nDepartmanlar:")
+        logger.info("\nDepartmanlar:")
         for i, dept in enumerate(company.departments.keys(), 1):
-            print(f"{i}. {dept}")
+            logger.info(f"{i}. {dept}")
         
         dept_idx = int(input("\nDepartman seçin: ")) - 1
         dept_name = list(company.departments.keys())[dept_idx]
@@ -115,9 +118,9 @@ async def main():
     # CEO'ya hedefleri sun
     ceo = company.get_ceo()
     if ceo:
-        print("\n" + "="*60)
+        logger.info("\n" + "="*60)
         print("💼 CEO'ya hedefler sunuluyor...")
-        print("="*60 + "\n")
+        logger.info("="*60 + "\n")
         
         active_goals = company.goal_manager.get_active_goals()
         goal_summary = "\n".join([
@@ -139,14 +142,14 @@ Bu hedefleri değerlendir:
 """
         )
         
-        print(f"\n💬 {ceo.name} (CEO):")
+        logger.info(f"\n💬 {ceo.name} (CEO):")
         print(decision['decision'])
     
-    print("\n✅ Hedef belirleme tamamlandı!")
-    print("\nHedefleri görmek için:")
-    print("  python show_goals.py")
-    print("\nŞirketi hedeflerle başlatmak için:")
-    print("  python main.py")
+    logger.info("\n✅ Hedef belirleme tamamlandı!")
+    logger.info("\nHedefleri görmek için:")
+    logger.info("  python show_goals.py")
+    logger.info("\nŞirketi hedeflerle başlatmak için:")
+    logger.info("  python main.py")
 
 
 if __name__ == "__main__":

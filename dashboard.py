@@ -13,6 +13,9 @@ from core.company import AutonomousCompany
 import time
 
 
+
+import logging
+logger = logging.getLogger(__name__)
 class CompanyDashboard:
     """Şirket dashboard'u - Canlı izleme"""
     
@@ -172,7 +175,7 @@ async def main():
     
     dashboard = CompanyDashboard(company)
     
-    print("\n📊 Dashboard açılıyor...\n")
+    logger.info("\n📊 Dashboard açılıyor...\n")
     
     # Canlı dashboard (60 saniye)
     await dashboard.run_live(duration=60)

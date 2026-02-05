@@ -25,7 +25,7 @@ st.markdown("---")
 try:
     health = requests.get(f"{API_URL}/health", timeout=2)
     api_ok = health.status_code == 200
-except:
+except Exception as e:
     api_ok = False
 
 if not api_ok:
@@ -135,7 +135,7 @@ with tabs[1]:
         agents_response = requests.get(f"{API_URL}/api/agents")
         agents_data = agents_response.json()
         agents_list = [a['name'] for a in agents_data['agents']]
-    except:
+    except Exception as e:
         st.error("Çalışan listesi alınamadı")
         agents_list = []
     
@@ -220,7 +220,7 @@ with tabs[3]:
         with col3:
             st.metric("Departman Sayısı", status.get('departments', 0))
     
-    except:
+    except Exception as e:
         st.error("Durum bilgisi alınamadı")
     
     st.markdown("---")
@@ -299,5 +299,5 @@ with tabs[3]:
         
         st.json(health_data)
     
-    except:
+    except Exception as e:
         st.error("Sistem bilgisi alınamadı")

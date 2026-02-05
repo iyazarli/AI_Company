@@ -6,6 +6,9 @@ import sys
 from datetime import datetime
 from dotenv import load_dotenv
 
+
+import logging
+logger = logging.getLogger(__name__)
 load_dotenv()
 
 from core.company import AutonomousCompany
@@ -15,17 +18,17 @@ async def main():
     """Toplantı simülasyonu çalıştır"""
     
     if len(sys.argv) < 2:
-        print("Kullanım: python run_meeting.py --type <meeting_type>")
-        print("\nToplantı Türleri:")
-        print("  daily-standup    - Günlük standup")
-        print("  weekly-review    - Haftalık değerlendirme")
-        print("  monthly-planning - Aylık planlama")
-        print("  cross-dept       - Departmanlar arası")
+        logger.info("Kullanım: python run_meeting.py --type <meeting_type>")
+        logger.info("\nToplantı Türleri:")
+        logger.info("  daily-standup    - Günlük standup")
+        logger.info("  weekly-review    - Haftalık değerlendirme")
+        logger.info("  monthly-planning - Aylık planlama")
+        logger.info("  cross-dept       - Departmanlar arası")
         return
     
     meeting_type = sys.argv[2] if len(sys.argv) > 2 else "daily-standup"
     
-    print(f"\n🎤 Toplantı Simülasyonu: {meeting_type}\n")
+    logger.info(f"\n🎤 Toplantı Simülasyonu: {meeting_type}\n")
     
     # Şirketi başlat
     company = AutonomousCompany()
@@ -36,9 +39,9 @@ async def main():
         # Her departman için standup
         for dept_name, agents in company.departments.items():
             if agents:
-                print(f"\n{'='*60}")
-                print(f"📍 Departman: {dept_name}")
-                print(f"{'='*60}\n")
+                logger.info(f"\n{'='*60}")
+                logger.info(f"📍 Departman: {dept_name}")
+                logger.info(f"{'='*60}\n")
                 
                 facilitator = agents[0]
                 meeting = await company.meeting_system.schedule_daily_standup(
@@ -68,7 +71,7 @@ async def main():
             agents=company.agents
         )
     
-    print("\n✅ Toplantı tamamlandı!\n")
+    logger.info("\n✅ Toplantı tamamlandı!\n")
 
 
 if __name__ == "__main__":

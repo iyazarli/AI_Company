@@ -9,6 +9,9 @@ from agents.base_agent import Message
 from agents.ai_agent import AIAgent
 
 
+
+import logging
+logger = logging.getLogger(__name__)
 class Channel(BaseModel):
     """Mesajlaşma kanalı"""
     id: str
@@ -46,7 +49,7 @@ class MessagingSystem:
         )
         
         self.channels[channel.id] = channel
-        print(f"📢 Yeni kanal oluşturuldu: {name}")
+        logger.info(f"📢 Yeni kanal oluşturuldu: {name}")
         return channel
     
     async def send_message(
@@ -111,7 +114,7 @@ class MessagingSystem:
             if recipient_name != from_agent.name:
                 await self.send_message(from_agent, recipient_name, subject, content)
         
-        print(f"📣 {from_agent.name} toplu mesaj gönderdi: {subject}")
+        logger.info(f"📣 {from_agent.name} toplu mesaj gönderdi: {subject}")
     
     def get_channel_messages(self, channel_id: str) -> List[Message]:
         """Kanal mesajlarını al"""
@@ -159,10 +162,10 @@ class CollaborationSystem:
         context: str
     ) -> Dict:
         """İş birliği başlat"""
-        print(f"\n🤝 İş birliği başlatılıyor:")
-        print(f"   Başlatan: {initiator.name}")
-        print(f"   İş birlikçi: {collaborator_name}")
-        print(f"   Konu: {topic}\n")
+        logger.info(f"\n🤝 İş birliği başlatılıyor:")
+        logger.info(f"   Başlatan: {initiator.name}")
+        logger.info(f"   İş birlikçi: {collaborator_name}")
+        logger.info(f"   Konu: {topic}\n")
         
         # Başlatıcının planı
         initiator_plan = await initiator.collaborate(collaborator_name, topic)
@@ -194,9 +197,9 @@ class CollaborationSystem:
         agents: Dict[str, AIAgent]
     ) -> Dict:
         """Departmanlar arası toplantı"""
-        print(f"\n🔄 Departmanlar Arası Toplantı:")
-        print(f"   Konu: {topic}")
-        print(f"   Departmanlar: {', '.join(departments)}\n")
+        logger.info(f"\n🔄 Departmanlar Arası Toplantı:")
+        logger.info(f"   Konu: {topic}")
+        logger.info(f"   Departmanlar: {', '.join(departments)}\n")
         
         participants = [
             agent for agent in agents.values()
@@ -211,7 +214,7 @@ class CollaborationSystem:
                 "agenda": [topic]
             })
             contributions.append(contribution)
-            print(f"💬 {agent.name}: {contribution['contribution'][:100]}...\n")
+            logger.info(f"💬 {agent.name}: {contribution['contribution'][:100]}...\n")
         
         return {
             "topic": topic,

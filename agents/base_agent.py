@@ -8,6 +8,9 @@ import asyncio
 from abc import ABC, abstractmethod
 
 
+
+import logging
+logger = logging.getLogger(__name__)
 class Task(BaseModel):
     """Görev modeli"""
     id: str
@@ -78,7 +81,7 @@ class BaseAgent(ABC):
         """Görev al"""
         if task.assigned_to == self.name:
             self.memory.tasks_active.append(task)
-            print(f"✅ {self.name} ({self.role}) - Yeni görev alındı: {task.title}")
+            logger.info(f"✅ {self.name} ({self.role}) - Yeni görev alındı: {task.title}")
             return True
         return False
     
@@ -91,7 +94,7 @@ class BaseAgent(ABC):
                 self.memory.tasks_completed.append(task)
                 self.memory.tasks_active.remove(task)
                 self.performance_metrics["tasks_completed"] += 1
-                print(f"✅ {self.name} - Görev tamamlandı: {task.title}")
+                logger.info(f"✅ {self.name} - Görev tamamlandı: {task.title}")
                 return True
         return False
     
@@ -111,7 +114,7 @@ class BaseAgent(ABC):
         """Mesaj al"""
         if message.to_agent == self.name:
             self.memory.messages_received.append(message)
-            print(f"📨 {self.name} - Yeni mesaj: {message.subject} (from: {message.from_agent})")
+            logger.info(f"📨 {self.name} - Yeni mesaj: {message.subject} (from: {message.from_agent})")
             return True
         return False
     
@@ -193,7 +196,7 @@ class BaseAgent(ABC):
     
     async def process_message(self, message: Message):
         """Mesajı işle"""
-        print(f"📖 {self.name} - Mesaj okunuyor: {message.subject}")
+        logger.info(f"📖 {self.name} - Mesaj okunuyor: {message.subject}")
         # Mesaja göre aksiyon al
         pass
     

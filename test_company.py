@@ -12,6 +12,9 @@ from systems.task import TaskManager, TaskPriority
 from systems.meeting import MeetingSystem
 
 
+
+import logging
+logger = logging.getLogger(__name__)
 class TestBasicSetup:
     """Temel kurulum testleri"""
     
@@ -24,7 +27,7 @@ class TestBasicSetup:
         assert company.is_running == True
         assert len(company.agents) > 0
         assert len(company.departments) == 8
-        print(f"✅ Şirket başlatma testi geçti - {len(company.agents)} ajan oluşturuldu")
+        logger.info(f"✅ Şirket başlatma testi geçti - {len(company.agents)} ajan oluşturuldu")
     
     def test_agent_factory(self):
         """Agent factory testi"""
@@ -38,7 +41,7 @@ class TestBasicSetup:
         tech_agents = factory.get_department_agents('technology')
         assert len(tech_agents) > 0
         
-        print(f"✅ Agent factory testi geçti - {len(agents)} ajan")
+        logger.info(f"✅ Agent factory testi geçti - {len(agents)} ajan")
     
     def test_managers_creation(self):
         """Yönetici oluşturma testi"""
@@ -51,7 +54,7 @@ class TestBasicSetup:
         assert len(managers) > 0
         assert len(executives) > 0
         
-        print(f"✅ Yönetici testi geçti - {len(managers)} manager, {len(executives)} executive")
+        logger.info(f"✅ Yönetici testi geçti - {len(managers)} manager, {len(executives)} executive")
 
 
 class TestTaskManagement:
@@ -74,7 +77,7 @@ class TestTaskManagement:
         assert task.title == "Test Görevi"
         assert task.priority == TaskPriority.HIGH
         
-        print("✅ Görev oluşturma testi geçti")
+        logger.info("✅ Görev oluşturma testi geçti")
     
     @pytest.mark.asyncio
     async def test_task_assignment(self):
@@ -96,7 +99,7 @@ class TestTaskManagement:
         success = await task_manager.assign_task_to_agent(task, agent)
         assert success == True
         
-        print("✅ Görev atama testi geçti")
+        logger.info("✅ Görev atama testi geçti")
 
 
 class TestMeetingSystem:
@@ -122,13 +125,13 @@ class TestMeetingSystem:
         assert meeting.type == "daily_standup"
         assert len(meeting.participants) == 3
         
-        print("✅ Standup toplantı testi geçti")
+        logger.info("✅ Standup toplantı testi geçti")
 
 
 @pytest.mark.asyncio
 async def test_quick_demo():
     """Hızlı demo testi"""
-    print("\n🎬 Hızlı Demo Testi Başlıyor...\n")
+    logger.info("\n🎬 Hızlı Demo Testi Başlıyor...\n")
     
     company = AutonomousCompany()
     
@@ -137,12 +140,12 @@ async def test_quick_demo():
     
     try:
         await company.initialize()
-        print("✅ Şirket başlatıldı")
+        logger.info("✅ Şirket başlatıldı")
         
         # Görev oluştur
         managers = company.agent_factory.get_managers()
         if managers:
-            print(f"✅ {len(managers)} yönetici bulundu")
+            logger.info(f"✅ {len(managers)} yönetici bulundu")
         
         # Toplantı planla
         tech_agents = company.departments.get('technology', [])[:3]
@@ -153,25 +156,25 @@ async def test_quick_demo():
                 facilitator=tech_agents[0],
                 scheduled_time=datetime.now()
             )
-            print(f"✅ Toplantı planlandı: {meeting.title}")
+            logger.info(f"✅ Toplantı planlandı: {meeting.title}")
         
         await company.print_company_status()
         
     except Exception as e:
-        print(f"⚠️  Test sırasında beklenen hata: {e}")
+        logger.info(f"⚠️  Test sırasında beklenen hata: {e}")
 
 
 def run_all_tests():
     """Tüm testleri çalıştır"""
-    print("\n" + "="*60)
+    logger.info("\n" + "="*60)
     print("🧪 OTONOM AI ŞİRKET TEST PAKETİ")
-    print("="*60 + "\n")
+    logger.info("="*60 + "\n")
     
     # Pytest olmadan basit test runner
-    print("📋 Test Kategorileri:\n")
+    logger.info("📋 Test Kategorileri:\n")
     
     # 1. Temel kurulum
-    print("1️⃣  Temel Kurulum Testleri")
+    logger.info("1️⃣  Temel Kurulum Testleri")
     setup_tests = TestBasicSetup()
     
     try:
@@ -179,29 +182,29 @@ def run_all_tests():
         setup_tests.test_managers_creation()
         print()
     except Exception as e:
-        print(f"❌ Hata: {e}\n")
+        logger.info(f"❌ Hata: {e}\n")
     
     # 2. Görev yönetimi
-    print("2️⃣  Görev Yönetimi Testleri")
+    logger.info("2️⃣  Görev Yönetimi Testleri")
     task_tests = TestTaskManagement()
     
     try:
         task_tests.test_task_creation()
         print()
     except Exception as e:
-        print(f"❌ Hata: {e}\n")
+        logger.info(f"❌ Hata: {e}\n")
     
     # 3. Async testler
-    print("3️⃣  Asenkron İşlem Testleri")
+    logger.info("3️⃣  Asenkron İşlem Testleri")
     
     try:
         asyncio.run(test_quick_demo())
     except Exception as e:
-        print(f"⚠️  Async test hatası (normal): {e}")
+        logger.info(f"⚠️  Async test hatası (normal): {e}")
     
-    print("\n" + "="*60)
+    logger.info("\n" + "="*60)
     print("✅ Test paketi tamamlandı!")
-    print("="*60 + "\n")
+    logger.info("="*60 + "\n")
 
 
 if __name__ == "__main__":

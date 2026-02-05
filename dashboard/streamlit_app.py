@@ -88,17 +88,17 @@ def check_api_keys():
         try:
             if 'OPENAI_API_KEY' in st.secrets:
                 keys.append('OpenAI')
-        except:
+        except Exception as e:
             pass
         try:
             if 'ANTHROPIC_API_KEY' in st.secrets:
                 keys.append('Anthropic')
-        except:
+        except Exception as e:
             pass
         try:
             if 'GOOGLE_API_KEY' in st.secrets:
                 keys.append('Google')
-        except:
+        except Exception as e:
             pass
         
         if keys:
@@ -135,17 +135,17 @@ def initialize_company():
             try:
                 if 'OPENAI_API_KEY' in st.secrets:
                     os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
-            except:
+            except Exception as e:
                 pass
             try:
                 if 'ANTHROPIC_API_KEY' in st.secrets:
                     os.environ['ANTHROPIC_API_KEY'] = st.secrets['ANTHROPIC_API_KEY']
-            except:
+            except Exception as e:
                 pass
             try:
                 if 'GOOGLE_API_KEY' in st.secrets:
                     os.environ['GOOGLE_API_KEY'] = st.secrets['GOOGLE_API_KEY']
-            except:
+            except Exception as e:
                 pass
         
         # Auto-config ile AI sağlayıcılarını ayarla

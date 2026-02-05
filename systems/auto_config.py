@@ -5,6 +5,9 @@ import os
 from typing import Dict, List, Optional
 from dotenv import load_dotenv
 
+
+import logging
+logger = logging.getLogger(__name__)
 load_dotenv()
 
 
@@ -28,13 +31,13 @@ class AutoAIConfigurator:
         
         available = [k for k, v in providers.items() if v]
         
-        print("\n" + "="*60)
+        logger.info("\n" + "="*60)
         print("🔍 API KEY TESPİTİ")
-        print("="*60)
+        logger.info("="*60)
         for provider, available in providers.items():
             status = "✅ Mevcut" if available else "❌ Yok"
-            print(f"{provider.upper():15} : {status}")
-        print("="*60 + "\n")
+            logger.info(f"{provider.upper():15} : {status}")
+        logger.info("="*60 + "\n")
         
         return providers
     
@@ -43,30 +46,30 @@ class AutoAIConfigurator:
         
         # Hiç API key yoksa
         if not any(self.available_providers.values()):
-            print("⚠️  UYARI: Hiç API key bulunamadı!")
-            print("Demo modunda çalışılacak (AI yanıtları simüle edilecek)\n")
+            logger.info("⚠️  UYARI: Hiç API key bulunamadı!")
+            logger.info("Demo modunda çalışılacak (AI yanıtları simüle edilecek)\n")
             return self._get_demo_config()
         
         # Sadece OpenAI varsa
         if self.available_providers['openai'] and sum(self.available_providers.values()) == 1:
-            print("📌 Sadece OpenAI API key bulundu")
-            print("Tüm çalışanlar OpenAI modelleri kullanacak\n")
+            logger.info("📌 Sadece OpenAI API key bulundu")
+            logger.info("Tüm çalışanlar OpenAI modelleri kullanacak\n")
             return self._get_openai_only_config()
         
         # OpenAI + Anthropic varsa (en yaygın)
         if self.available_providers['openai'] and self.available_providers['anthropic']:
-            print("🎯 OpenAI + Anthropic tespit edildi")
-            print("✨ AKILLI DAĞILIM:")
-            print("   • Yazılım ekibi → Claude (daha iyi kod)")
-            print("   • Marketing → GPT (daha kreatif)")
-            print("   • Araştırma → Claude (daha derin analiz)")
-            print("   • Executives → Claude Opus (karmaşık muhakeme)\n")
+            logger.info("🎯 OpenAI + Anthropic tespit edildi")
+            logger.info("✨ AKILLI DAĞILIM:")
+            logger.info("   • Yazılım ekibi → Claude (daha iyi kod)")
+            logger.info("   • Marketing → GPT (daha kreatif)")
+            logger.info("   • Araştırma → Claude (daha derin analiz)")
+            logger.info("   • Executives → Claude Opus (karmaşık muhakeme)\n")
             return self._get_openai_anthropic_config()
         
         # Hepsi varsa
         if sum(self.available_providers.values()) >= 3:
-            print("🌟 Çoklu AI sağlayıcı tespit edildi")
-            print("En optimal dağılım yapılacak\n")
+            logger.info("🌟 Çoklu AI sağlayıcı tespit edildi")
+            logger.info("En optimal dağılım yapılacak\n")
             return self._get_multi_provider_config()
         
         # Fallback
@@ -272,20 +275,20 @@ class AutoAIConfigurator:
     
     def print_configuration_summary(self):
         """Konfigürasyon özetini yazdır"""
-        print("\n" + "="*60)
+        logger.info("\n" + "="*60)
         print("⚙️  OTOMATİK AI KONFİGÜRASYONU")
-        print("="*60)
-        print(f"Mod: {self.optimal_config['mode']}")
-        print(f"Varsayılan Model: {self.optimal_config['default_model']}")
-        print("\nTier Atamaları:")
+        logger.info("="*60)
+        logger.info(f"Mod: {self.optimal_config['mode']}")
+        logger.info(f"Varsayılan Model: {self.optimal_config['default_model']}")
+        logger.info("\nTier Atamaları:")
         
         for tier, assignment in self.optimal_config.get('assignments', {}).items():
             if tier != 'all':
-                print(f"\n  {tier.upper()}:")
-                print(f"    Primary: {assignment['primary']}")
-                print(f"    Fallback: {assignment['fallback']}")
+                logger.info(f"\n  {tier.upper()}:")
+                logger.info(f"    Primary: {assignment['primary']}")
+                logger.info(f"    Fallback: {assignment['fallback']}")
         
-        print("\n" + "="*60 + "\n")
+        logger.info("\n" + "="*60 + "\n")
 
 
 # Global instance

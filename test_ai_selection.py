@@ -4,12 +4,15 @@ Test AI Assignments - Akıllı dağılımı test et
 from systems.auto_config import AutoAIConfigurator
 
 
+
+import logging
+logger = logging.getLogger(__name__)
 def main():
     """AI atamaları test et"""
     
-    print("\n" + "="*70)
+    logger.info("\n" + "="*70)
     print("🧪 AI ATAMA TESTİ - Akıllı Dağılım")
-    print("="*70 + "\n")
+    logger.info("="*70 + "\n")
     
     config = AutoAIConfigurator()
     
@@ -40,7 +43,7 @@ def main():
         ("Customer Support", 4),
     ]
     
-    print("📋 ROLE BAZLI OPTİMAL AI SEÇİMİ:\n")
+    logger.info("📋 ROLE BAZLI OPTİMAL AI SEÇİMİ:\n")
     
     for role, difficulty in test_roles:
         model_config = config.get_model_for_role(difficulty, role)
@@ -61,11 +64,11 @@ def main():
             provider_icon = "⚪ Demo"
             strength = "Simülasyon"
         
-        print(f"{role:30} → {provider_icon:15} | {primary:35} | {strength}")
+        logger.info(f"{role:30} → {provider_icon:15} | {primary:35} | {strength}")
     
-    print("\n" + "="*70)
+    logger.info("\n" + "="*70)
     print("✅ Akıllı Dağılım Özeti:")
-    print("="*70)
+    logger.info("="*70)
     print("""
 🔵 CLAUDE (Coding & Deep Analysis)
    ✓ Tüm yazılım geliştirme rolleri

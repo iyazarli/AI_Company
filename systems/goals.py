@@ -7,6 +7,9 @@ from pydantic import BaseModel
 from enum import Enum
 
 
+
+import logging
+logger = logging.getLogger(__name__)
 class GoalPeriod(str, Enum):
     """Hedef periyodu"""
     DAILY = "daily"
@@ -72,12 +75,12 @@ class GoalManager:
         self.goals[goal.id] = goal
         self.active_goals.append(goal)
         
-        print(f"\n🎯 YENİ HEDEF BELİRLENDİ")
-        print(f"   📌 {title}")
-        print(f"   👤 Sorumlu: {owner}")
-        print(f"   📅 Periyod: {period.value}")
+        logger.info(f"\n🎯 YENİ HEDEF BELİRLENDİ")
+        logger.info(f"   📌 {title}")
+        logger.info(f"   👤 Sorumlu: {owner}")
+        logger.info(f"   📅 Periyod: {period.value}")
         if deadline:
-            print(f"   ⏰ Son Tarih: {deadline.strftime('%Y-%m-%d')}")
+            logger.info(f"   ⏰ Son Tarih: {deadline.strftime('%Y-%m-%d')}")
         print()
         
         return goal
@@ -105,9 +108,9 @@ class GoalManager:
         self.goals[goal.id] = goal
         self.active_goals.append(goal)
         
-        print(f"\n🎯 DEPARTMAN HEDEFİ: {department}")
-        print(f"   📌 {title}")
-        print(f"   👤 Sorumlu: {owner}")
+        logger.info(f"\n🎯 DEPARTMAN HEDEFİ: {department}")
+        logger.info(f"   📌 {title}")
+        logger.info(f"   👤 Sorumlu: {owner}")
         print()
         
         return goal
@@ -119,10 +122,10 @@ class GoalManager:
             old_progress = goal.progress
             goal.progress = min(100.0, max(0.0, progress))
             
-            print(f"📊 Hedef İlerlemesi Güncellendi: {goal.title}")
-            print(f"   {old_progress:.1f}% -> {goal.progress:.1f}%")
+            logger.info(f"📊 Hedef İlerlemesi Güncellendi: {goal.title}")
+            logger.info(f"   {old_progress:.1f}% -> {goal.progress:.1f}%")
             if notes:
-                print(f"   💬 {notes}")
+                logger.info(f"   💬 {notes}")
             
             # Tamamlanma kontrolü
             if goal.progress >= 100.0 and goal.status != GoalStatus.COMPLETED:
@@ -139,8 +142,8 @@ class GoalManager:
                 self.active_goals.remove(goal)
             self.completed_goals.append(goal)
             
-            print(f"\n✅ HEDEF TAMAMLANDI: {goal.title}")
-            print(f"   👏 Tebrikler! {goal.owner}")
+            logger.info(f"\n✅ HEDEF TAMAMLANDI: {goal.title}")
+            logger.info(f"   👏 Tebrikler! {goal.owner}")
             print()
     
     def get_active_goals(self, period: Optional[GoalPeriod] = None) -> List[Goal]:
@@ -225,19 +228,19 @@ class GoalSettingInterface:
     
     def interactive_goal_setting(self):
         """İnteraktif hedef belirleme"""
-        print("\n" + "="*60)
+        logger.info("\n" + "="*60)
         print("🎯 ŞİRKET HEDEFİ BELİRLEME")
-        print("="*60 + "\n")
+        logger.info("="*60 + "\n")
         
         title = input("Hedef Başlığı: ")
         description = input("Açıklama: ")
         
-        print("\nPeriyod Seçin:")
-        print("1. Günlük")
-        print("2. Haftalık")
-        print("3. Aylık")
-        print("4. Üç Aylık")
-        print("5. Yıllık")
+        logger.info("\nPeriyod Seçin:")
+        logger.info("1. Günlük")
+        logger.info("2. Haftalık")
+        logger.info("3. Aylık")
+        logger.info("4. Üç Aylık")
+        logger.info("5. Yıllık")
         
         period_choice = input("\nSeçim (1-5): ").strip()
         period_map = {
@@ -259,12 +262,12 @@ class GoalSettingInterface:
             owner=owner
         )
         
-        print(f"✅ Hedef başarıyla oluşturuldu! (ID: {goal.id})")
+        logger.info(f"✅ Hedef başarıyla oluşturuldu! (ID: {goal.id})")
         return goal
     
     def quick_set_goals(self, goals: List[Dict]):
         """Hızlı hedef belirleme - Liste ile"""
-        print("\n🚀 Toplu Hedef Belirleme Başlıyor...\n")
+        logger.info("\n🚀 Toplu Hedef Belirleme Başlıyor...\n")
         
         created_goals = []
         for goal_data in goals:
@@ -276,5 +279,5 @@ class GoalSettingInterface:
             )
             created_goals.append(goal)
         
-        print(f"\n✅ {len(created_goals)} hedef belirlendi!\n")
+        logger.info(f"\n✅ {len(created_goals)} hedef belirlendi!\n")
         return created_goals

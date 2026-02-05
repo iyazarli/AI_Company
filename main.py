@@ -6,6 +6,9 @@ import sys
 import os
 from dotenv import load_dotenv
 
+
+import logging
+logger = logging.getLogger(__name__)
 # .env dosyasını yükle
 load_dotenv()
 
@@ -14,7 +17,7 @@ from core.company import AutonomousCompany
 
 async def main():
     """Ana program"""
-    print("""
+    logger.info("""
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
 ║       🏢 OTONOM AI ŞİRKET SİMÜLASYONU 🏢                    ║
@@ -30,11 +33,11 @@ async def main():
     
     # API key kontrolü
     if not os.getenv("OPENAI_API_KEY"):
-        print("⚠️  UYARI: OPENAI_API_KEY bulunamadı!")
-        print("Lütfen .env dosyasını oluşturun ve API anahtarınızı ekleyin.\n")
-        print("Örnek:")
-        print("  cp .env.example .env")
-        print("  # .env dosyasını düzenleyin\n")
+        logger.info("⚠️  UYARI: OPENAI_API_KEY bulunamadı!")
+        logger.info("Lütfen .env dosyasını oluşturun ve API anahtarınızı ekleyin.\n")
+        logger.info("Örnek:")
+        logger.info("  cp .env.example .env")
+        logger.info("  # .env dosyasını düzenleyin\n")
         
         demo_mode = input("Demo modunda devam edilsin mi? (y/n): ")
         if demo_mode.lower() != 'y':
@@ -43,11 +46,11 @@ async def main():
     # Şirketi oluştur
     company = AutonomousCompany()
     
-    print("\nŞirket modunu seçin:")
-    print("1. Hızlı Demo (5 dakika)")
-    print("2. Tek Gün Simülasyonu")
-    print("3. Sürekli Çalışma (7 gün)")
-    print("4. Özel Senaryo")
+    logger.info("\nŞirket modunu seçin:")
+    logger.info("1. Hızlı Demo (5 dakika)")
+    logger.info("2. Tek Gün Simülasyonu")
+    logger.info("3. Sürekli Çalışma (7 gün)")
+    logger.info("4. Özel Senaryo")
     
     choice = input("\nSeçiminiz (1-4): ").strip()
     
@@ -69,42 +72,42 @@ async def main():
             await custom_scenario(company)
         
         else:
-            print("Geçersiz seçim! Hızlı demo başlatılıyor...")
+            logger.info("Geçersiz seçim! Hızlı demo başlatılıyor...")
             await company.quick_demo()
         
         # Kapanış
         await company.shutdown()
     
     except KeyboardInterrupt:
-        print("\n\n⚠️  Program durduruldu (Ctrl+C)")
+        logger.info("\n\n⚠️  Program durduruldu (Ctrl+C)")
         await company.shutdown()
     
     except Exception as e:
-        print(f"\n❌ Hata: {e}")
+        logger.info(f"\n❌ Hata: {e}")
         import traceback
         traceback.print_exc()
 
 
 async def custom_scenario(company: AutonomousCompany):
     """Özel senaryo - Kullanıcı tanımlı"""
-    print("\n🎭 ÖZEL SENARYO MODU\n")
+    logger.info("\n🎭 ÖZEL SENARYO MODU\n")
     
     await company.initialize()
     
-    print("\nHangi aktiviteyi gerçekleştirmek istersiniz?")
-    print("1. Departman Toplantısı")
-    print("2. Görev Atama")
-    print("3. Departmanlar Arası İş Birliği")
-    print("4. Haftalık Review")
-    print("5. Aylık Planlama")
+    logger.info("\nHangi aktiviteyi gerçekleştirmek istersiniz?")
+    logger.info("1. Departman Toplantısı")
+    logger.info("2. Görev Atama")
+    logger.info("3. Departmanlar Arası İş Birliği")
+    logger.info("4. Haftalık Review")
+    logger.info("5. Aylık Planlama")
     
     activity = input("\nAktivite (1-5): ").strip()
     
     if activity == "1":
         # Departman seç
-        print("\nDepartmanlar:")
+        logger.info("\nDepartmanlar:")
         for i, dept in enumerate(company.departments.keys(), 1):
-            print(f"{i}. {dept}")
+            logger.info(f"{i}. {dept}")
         
         dept_choice = input("Departman numarası: ").strip()
         dept_name = list(company.departments.keys())[int(dept_choice) - 1]
