@@ -7,7 +7,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import HumanMessage, SystemMessage
 import os
-from systems.ai_provider import AIProviderManager
+from systems.ai_provider import get_ai_provider, AIProvider
 
 
 
@@ -18,11 +18,11 @@ class AIAgent(BaseAgent):
     
     def __init__(self, name: str, role: str, department: str, skills: List[str], 
                  manager: Optional[str] = None, model: str = None, 
-                 ai_provider_manager: AIProviderManager = None):
+                 ai_provider_manager: AIProvider = None):
         super().__init__(name, role, department, skills, manager)
         
         # AI Provider Manager
-        self.ai_provider_manager = ai_provider_manager or AIProviderManager()
+        self.ai_provider_manager = ai_provider_manager or get_ai_provider()
         
         # Role'e göre en uygun AI'ı seç
         if model:

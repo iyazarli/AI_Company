@@ -1,7 +1,7 @@
 """
 Show AI Assignments - AI atamalarını göster
 """
-from systems.ai_provider import AIProviderManager
+from systems.ai_provider import get_ai_provider
 
 
 
@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 def main():
     """AI atama raporunu göster"""
     
-    provider_manager = AIProviderManager()
+    provider_manager = get_ai_provider()
     
     # Detaylı rapor
     print(provider_manager.generate_ai_assignment_report())

@@ -5,7 +5,7 @@ import yaml
 import logging
 from typing import Dict, List
 from agents.ai_agent import AIAgent, ManagerAgent, ExecutiveAgent
-from systems.ai_provider import AIProviderManager
+from systems.ai_provider import get_ai_provider, AIProvider
 
 logger = logging.getLogger(__name__)
 

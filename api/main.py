@@ -19,8 +19,8 @@ ROOT_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(ROOT_DIR))
 
 from core.company import AutonomousCompany
-from systems.ai_provider import AIProviderManager
-from systems.auto_config import AutoAIConfigurator
+from systems.ai_provider import get_ai_provider, AIProvider
+from systems.auto_config import get_auto_configurator
 
 # FastAPI uygulaması
 app = FastAPI(
@@ -155,16 +155,8 @@ async def start_company(background_tasks: BackgroundTasks):
         return {"message": "Şirket zaten çalışıyor"}
     
     try:
-        # Auto-config ile AI sağlayıcılarını ayarla
-        auto_config = AutoAIConfigurator()
-        config = auto_config.generate_config()
-        
-        # AI Provider Manager oluştur
-        ai_manager = AIProviderManager(
-            config_path=ROOT_DIR / 'config' / 'ai_providers_config.yaml',
-            auto_mode=True,
-            auto_config=auto_config
-        )
+        # AI Provider oluştur (auto-mode ile)
+        ai_manager = get_ai_provider(auto_mode=True)
         
         # Şirketi oluştur
         company = AutonomousCompany(
