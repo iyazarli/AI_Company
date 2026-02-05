@@ -1,11 +1,14 @@
 """
 Meeting System - Toplantı yönetim sistemi
 """
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, TYPE_CHECKING
 from datetime import datetime, time
 from pydantic import BaseModel
 import asyncio
-from agents.ai_agent import AIAgent
+
+# Circular import önlemek için TYPE_CHECKING kullan
+if TYPE_CHECKING:
+    from agents.ai_agent import AIAgent
 
 
 class MeetingAgenda(BaseModel):
@@ -40,8 +43,8 @@ class MeetingSystem:
     async def schedule_daily_standup(
         self, 
         department: str,
-        participants: List[AIAgent],
-        facilitator: AIAgent,
+        participants: List,
+        facilitator,
         scheduled_time: datetime
     ) -> Meeting:
         """Günlük standup toplantısı planla"""
@@ -70,7 +73,7 @@ class MeetingSystem:
     async def conduct_daily_standup(
         self,
         meeting: Meeting,
-        agents: List[AIAgent]
+        agents: List  # Type hint'i kaldırdık, runtime'da any list kabul edecek
     ) -> Dict:
         """Günlük standup toplantısını yürüt"""
         print(f"\n{'='*60}")
@@ -111,8 +114,8 @@ class MeetingSystem:
     async def schedule_weekly_review(
         self,
         department: str,
-        participants: List[AIAgent],
-        facilitator: AIAgent,
+        participants: List,
+        facilitator,
         scheduled_time: datetime
     ) -> Meeting:
         """Haftalık değerlendirme toplantısı planla"""
@@ -142,7 +145,7 @@ class MeetingSystem:
     async def conduct_weekly_review(
         self,
         meeting: Meeting,
-        agents: List[AIAgent]
+        agents: List
     ) -> Dict:
         """Haftalık değerlendirme toplantısını yürüt"""
         print(f"\n{'='*60}")
@@ -178,8 +181,8 @@ class MeetingSystem:
     
     async def schedule_monthly_planning(
         self,
-        participants: List[AIAgent],
-        facilitator: AIAgent,
+        participants: List,
+        facilitator,
         scheduled_time: datetime
     ) -> Meeting:
         """Aylık planlama toplantısı planla"""
@@ -210,7 +213,7 @@ class MeetingSystem:
     async def conduct_monthly_planning(
         self,
         meeting: Meeting,
-        agents: List[AIAgent]
+        agents: List
     ) -> Dict:
         """Aylık planlama toplantısını yürüt"""
         print(f"\n{'='*60}")
@@ -247,8 +250,8 @@ class MeetingSystem:
     async def schedule_ad_hoc_meeting(
         self,
         title: str,
-        participants: List[AIAgent],
-        facilitator: AIAgent,
+        participants: List,
+        facilitator,
         agenda_items: List[str],
         duration: int = 30
     ) -> Meeting:
