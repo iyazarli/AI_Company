@@ -8,6 +8,8 @@ import yaml
 
 from agents.factory import AgentFactory
 from agents.ai_agent import AIAgent, ManagerAgent, ExecutiveAgent
+
+# Lazy import circular dependency önlemek için
 from systems.meeting import MeetingSystem
 from systems.task import TaskManager, TaskPriority
 from systems.messaging import MessagingSystem, CollaborationSystem

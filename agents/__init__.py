@@ -1,7 +1,6 @@
 """Agents package"""
-from .base_agent import BaseAgent, Task, Message, AgentMemory
-from .ai_agent import AIAgent, ManagerAgent, ExecutiveAgent
-from .factory import AgentFactory
+# Circular import önlemek için modüller direkt import edilmeli
+# from agents.base_agent import BaseAgent
 
 __all__ = [
     'BaseAgent',

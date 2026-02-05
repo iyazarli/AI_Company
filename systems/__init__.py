@@ -1,8 +1,6 @@
 """Systems package"""
-from .meeting import MeetingSystem, Meeting, MeetingAgenda
-from .task import TaskManager, TaskPriority, TaskStatus
-from .messaging import MessagingSystem, CollaborationSystem, Channel
-from .goals import GoalManager, GoalPeriod, GoalStatus, Goal
+# Circular import önlemek için lazy import kullan
+# Her modül direkt import edilerek kullanılmalı
 
 __all__ = [
     'MeetingSystem',

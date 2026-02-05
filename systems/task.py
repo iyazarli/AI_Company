@@ -1,12 +1,14 @@
 """
 Task Management System - Görev yönetim sistemi
 """
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, TYPE_CHECKING
 from datetime import datetime, timedelta
 from pydantic import BaseModel
 import uuid
 from agents.base_agent import Task
-from agents.ai_agent import AIAgent, ManagerAgent
+
+if TYPE_CHECKING:
+    from agents.ai_agent import AIAgent, ManagerAgent
 
 
 class TaskPriority:
@@ -66,7 +68,7 @@ class TaskManager:
         
         return task
     
-    async def assign_task_to_agent(self, task: Task, agent: AIAgent) -> bool:
+    async def assign_task_to_agent(self, task: Task, agent) -> bool:
         """Görevi agenta ata"""
         success = await agent.receive_task(task)
         if success:
@@ -148,8 +150,8 @@ class TaskManager:
     
     async def auto_assign_tasks(
         self,
-        manager: ManagerAgent,
-        available_agents: List[AIAgent]
+        manager,
+        available_agents: List
     ) -> List[Task]:
         """Yöneticinin otomatik görev ataması yapması"""
         assigned_tasks = []
